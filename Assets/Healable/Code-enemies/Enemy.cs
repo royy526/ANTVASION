@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
     {
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
 
-        if (playerObject != null)
+        if (playerObject != null) 
         {
             player = playerObject.transform;
         }
