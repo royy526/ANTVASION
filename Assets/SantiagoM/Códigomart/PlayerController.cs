@@ -28,19 +28,19 @@ public class PlayerController : MonoBehaviour
         PlayerMovement();
     }
 
-    private void FixedUpdate()
-    {
-        
-    }
-
     public void PlayerMovement()
     {
-        float ActualPlayerSpeed = playerSpeed * SpeedStat; 
+        float ActualPlayerSpeed = playerSpeed * SpeedStat;
         float HorizontalMovement = Input.GetAxisRaw("Horizontal");
         float VerticalMovement = Input.GetAxisRaw("Vertical");
-        playerMoves = new Vector2(HorizontalMovement, VerticalMovement).normalized;
-        _playerRigidBody2D.linearVelocity = new Vector2(HorizontalMovement * ActualPlayerSpeed, VerticalMovement * ActualPlayerSpeed);
+        playerMoves = new Vector2(HorizontalMovement * ActualPlayerSpeed, VerticalMovement * ActualPlayerSpeed).normalized;
+        _playerRigidBody2D.linearVelocity = new Vector2(HorizontalMovement, VerticalMovement);
     }
+    private void FixedUpdate()
+    {
+
+    }
+
     public void Attack()
     {
 

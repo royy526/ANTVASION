@@ -88,37 +88,14 @@ public class EnemyRoomEncounter : MonoBehaviour
                 return;
             enemyObject = Instantiate(selectedPrefab, spawnPosition, Quaternion.identity, transform);
         }
-        else
-        {
-            enemyObject = CreatePrototypeEnemy(spawnPosition);
-        }
 
 
-        Enemy legacyEnemy = enemyObject.GetComponent<Enemy>();
-        if (legacyEnemy != null)
-            legacyEnemy.enabled = false;
 
-        RoomEnemy enemy = enemyObject.GetComponent<RoomEnemy>();
-        if (enemy == null)
-            enemy = enemyObject.AddComponent<RoomEnemy>();
 
-        enemy.Initialize(player, spawnGrid);
-        enemy.Died += HandleEnemyDied;
-        aliveEnemies.Add(enemy);
+
+
     }
 
-    private GameObject CreatePrototypeEnemy(Vector2 position)
-    {
-        GameObject enemy = new GameObject("Prototype Enemy");
-        enemy.transform.SetParent(transform);
-        enemy.transform.position = position;
-
-        SpriteRenderer renderer = enemy.AddComponent<SpriteRenderer>();
-        renderer.sprite = CreateSquareSprite();
-        renderer.color = new Color(0.9f, 0.18f, 0.18f);
-        enemy.transform.localScale = Vector3.one * 0.55f;
-        return enemy;
-    }
 
     private void HandleEnemyDied(RoomEnemy enemy)
     {
