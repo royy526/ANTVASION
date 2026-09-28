@@ -3,8 +3,10 @@ using UnityEngine;
 using UnityEngine.Events;
 
 
-[RequireComponent(typeof(BoxCollider))]
+
+
 public class EnemyRoomEncounter : MonoBehaviour
+
 {
     [Header("Encounter")]
     [SerializeField, Min(1)] private int enemiesToSpawn = 3;
@@ -21,7 +23,7 @@ public class EnemyRoomEncounter : MonoBehaviour
 
     private readonly List<RoomEnemy> aliveEnemies = new();
     private readonly List<GameObject> barriers = new();
-    private BoxCollider roomBounds;
+    [SerializeField] private BoxCollider2D roomBounds;
     private EnemySpawnGrid spawnGrid;
     private bool encounterStarted;
     private bool roomCleared;
@@ -31,7 +33,6 @@ public class EnemyRoomEncounter : MonoBehaviour
 
     private void Awake()
     {
-        roomBounds = GetComponent<BoxCollider>();
         FindPlayer();
         EnsurePlayerPhysics();
         CreateGrid();
