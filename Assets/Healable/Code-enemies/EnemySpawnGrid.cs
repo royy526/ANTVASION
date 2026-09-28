@@ -3,7 +3,7 @@ using UnityEngine;
 
 
 [RequireComponent(typeof(Grid))]
-[RequireComponent(typeof(BoxCollider2D))]
+
 public class EnemySpawnGrid : MonoBehaviour
 {
     private static readonly Vector2Int[] Directions =
@@ -17,7 +17,7 @@ public class EnemySpawnGrid : MonoBehaviour
     private float cellSize;
     private int width;
     private int height;
-    private BoxCollider2D spawnBounds;
+    [SerializeField] private BoxCollider2D Bounds;
     private LayerMask obstacleMask;
 
     public void Configure(Bounds bounds, float requestedCellSize, LayerMask requestedObstacleMask)
