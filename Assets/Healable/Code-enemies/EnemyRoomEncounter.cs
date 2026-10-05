@@ -1,4 +1,6 @@
+using JetBrains.Annotations;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -30,6 +32,9 @@ public class EnemyRoomEncounter : MonoBehaviour
 
     public int EnemiesAlive => aliveEnemies.Count;
     public bool RoomCleared => roomCleared;
+
+    [Range(0f, 1f)]
+    public float myAlpha = 0f;
 
     private void Awake()
     {
@@ -163,17 +168,18 @@ public class EnemyRoomEncounter : MonoBehaviour
     private void CreateBarrier(string barrierName, Vector2 position, Vector2 size)
     {
         GameObject barrier = new GameObject(barrierName);
-        barrier.transform.SetParent(transform);
         barrier.transform.position = position;
+
+        
 
         SpriteRenderer renderer = barrier.AddComponent<SpriteRenderer>();
         renderer.sprite = CreateSquareSprite();
         renderer.color = new Color(0.2f, 0.85f, 1f, 0.8f);
         barrier.transform.localScale = new Vector3(size.x, size.y, 1f);
-
         BoxCollider2D collider = barrier.AddComponent<BoxCollider2D>();
         collider.size = Vector2.one;
         barriers.Add(barrier);
+        
     }
 
     private static Sprite CreateSquareSprite()

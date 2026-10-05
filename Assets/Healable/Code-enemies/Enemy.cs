@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public int health = 100;
-    public int damage = 10;
+    public float health;
+    public float MaxHealth = 6f;
+    public float damage = 10;
     public float speed = 2f;
 
     protected Transform player;
@@ -11,6 +12,7 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Start()
     {
+        health = MaxHealth;
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
 
         if (playerObject != null) 
@@ -36,7 +38,7 @@ public class Enemy : MonoBehaviour
         );
     }
 
-    public virtual void TakeDamage(int damageAmount)
+    public virtual void TakeDamage(float damageAmount)
     {
         health -= damageAmount;
 
