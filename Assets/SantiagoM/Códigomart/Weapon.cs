@@ -9,7 +9,7 @@ public class Weapon : MonoBehaviour
         Enemy enemy = collision.GetComponent<Enemy>();
         if (enemy != null)
         {
-            enemy.TakeDamage(PC.PlayerDamage);
+            //enemy.TakeDamage(PC.PlayerDamage);
         }
     }
 }

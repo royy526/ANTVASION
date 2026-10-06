@@ -1,87 +1,60 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [Header("Jugador")]
-    public Transform player;
-
     [Header("Enemigos")]
-    public GameObject[] enemyPrefabs;
+    [SerializeField] private List<Enemy> _enemyPrefabs;
+    [SerializeField] private int _minEnemies = 2;
+    [SerializeField] private int _maxEnemies = 4;
 
-    [Header("Cantidad de enemigos")]
-    public int minEnemies = 3;
-    public int maxEnemies = 6;
+    [Header("Posiciones de aparicion")]
+    [SerializeField] private Transform[] _spawnPoints;
 
-    [Header("Zona de aparición")]
-    public float spawnDistance = 5f;
+    private int _enemiesAlive;
 
-    private int enemiesAlive;
-    private bool waveStarted = false;
-    private bool waveCompleted = false;
+    public event Action AllEnemiesDefeated;
 
-    private void OnTriggerEnter2D(Collider2D other)
+
+    public bool Spawn()
     {
-        if (other.CompareTag("Player") && !waveStarted)
+        if (_enemyPrefabs.Count == 0 || _spawnPoints.Length == 0)
         {
-            StartWave();
-        }
-    }
-
-    private void StartWave()
-    {
-        waveStarted = true;
-
-        int enemyAmount = Random.Range(minEnemies, maxEnemies + 1);
-
-        for (int i = 0; i < enemyAmount; i++)
-        {
-            SpawnEnemy();
-        }
-    }
-
-    private void SpawnEnemy()
-    {
-        if (enemyPrefabs.Length == 0)
-        {
-            return;
+            return false;
         }
 
-        Vector2 randomDirection = Random.insideUnitCircle.normalized;
+        int count = UnityEngine.Random.Range(_minEnemies, _maxEnemies + 1);
+        count = Mathf.Min(count, _spawnPoints.Length);
 
-        Vector2 spawnPosition =
-            (Vector2)player.position + randomDirection * spawnDistance;
 
-        int randomEnemy = Random.Range(0, enemyPrefabs.Length);
-
-        GameObject enemyObject = Instantiate(
-            enemyPrefabs[randomEnemy],
-            spawnPosition,
-            Quaternion.identity
-        );
-
-        Enemy enemy = enemyObject.GetComponent<Enemy>();
-
-        if (enemy != null)
+        List<Transform> points = new List<Transform>(_spawnPoints);
+        for (int i = points.Count - 1; i > 0; i--)
         {
+            int j = UnityEngine.Random.Range(0, i + 1);
+            (points[i], points[j]) = (points[j], points[i]);
+        }
+
+        _enemiesAlive = count;
+
+        for (int i = 0; i < count; i++)
+        {
+            Enemy prefab = _enemyPrefabs[UnityEngine.Random.Range(0, _enemyPrefabs.Count)];
+            Enemy enemy = Instantiate(prefab, points[i].position, Quaternion.identity, transform.parent);
             enemy.SetSpawner(this);
         }
 
-        enemiesAlive++;
+        return count > 0;
     }
+
 
     public void EnemyDied()
     {
-        enemiesAlive--;
+        _enemiesAlive--;
 
-        if (enemiesAlive <= 0)
+        if (_enemiesAlive <= 0)
         {
-            CompleteWave();
+            AllEnemiesDefeated?.Invoke();
         }
-    }
-
-    private void CompleteWave()
-    {
-        waveCompleted = true;
-
     }
 }

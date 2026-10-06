@@ -239,17 +239,18 @@ public class MapGeneratos : MonoBehaviour
                 count++;
             }
 
-            if (exactlyOne && count !=1)
-            {
-                Debug.LogError($"[ValidateMap] se esperaba exactamente 1 sala del tipo {type}, pero hay {count}");
-                return false;
-            }
+            
+        }
+        if (exactlyOne && count != 1)
+        {
+            Debug.LogError($"[ValidateMap] se esperaba exactamente 1 sala del tipo {type}, pero hay {count}");
+            return false;
+        }
 
-            if (!exactlyOne && count > 1)
-            {
-                Debug.LogError($"[ValidateMap] no deberia de haber mas de 1 sala de tipo {type}, pero hay {count}");
-                return false;
-            }
+        if (!exactlyOne && count > 1)
+        {
+            Debug.LogError($"[ValidateMap] no deberia de haber mas de 1 sala de tipo {type}, pero hay {count}");
+            return false;
         }
 
         return true;
