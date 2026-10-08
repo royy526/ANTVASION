@@ -299,9 +299,9 @@ MonoBehaviour:
   _jumpChance: 0.15
   normalRoomPrefab: {fileID: 971295285641946171, guid: 48c7fb637e8793d4b81aac5faae52e3d, type: 3}
   startRoomPrefab: {fileID: 971295285641946171, guid: a62da19a345781641b20ba045291c2ea, type: 3}
-  bossRoomPrefab: {fileID: 971295285641946171, guid: 0c90ffa18d1a02249a922165dc48f7cb, type: 3}
-  treasureRoomPrefab: {fileID: 971295285641946171, guid: 229de02aa8ed2204e9fbbceddda4f15f, type: 3}
-  shopRoomPrefab: {fileID: 971295285641946171, guid: 0d39d280837f83243bd4aad3445511fa, type: 3}
+  bossRoomPrefab: {fileID: 971295285641946171, guid: 48c7fb637e8793d4b81aac5faae52e3d, type: 3}
+  treasureRoomPrefab: {fileID: 971295285641946171, guid: 48c7fb637e8793d4b81aac5faae52e3d, type: 3}
+  shopRoomPrefab: {fileID: 971295285641946171, guid: 48c7fb637e8793d4b81aac5faae52e3d, type: 3}
   roomWorldSize: {x: 4.9, y: 2.8}
 --- !u!4 &442162344
 Transform:
@@ -565,6 +565,42 @@ PrefabInstance:
       propertyPath: m_Constraints
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 2166750078673278182, guid: cae00b357d4ccd8459aa8ce571eb2001, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2166750078673278182, guid: cae00b357d4ccd8459aa8ce571eb2001, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2166750078673278182, guid: cae00b357d4ccd8459aa8ce571eb2001, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.012086171
+      objectReference: {fileID: 0}
+    - target: {fileID: 2166750078673278182, guid: cae00b357d4ccd8459aa8ce571eb2001, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.99992704
+      objectReference: {fileID: 0}
+    - target: {fileID: 2166750078673278182, guid: cae00b357d4ccd8459aa8ce571eb2001, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -1.385
+      objectReference: {fileID: 0}
+    - target: {fileID: 2166750078673278182, guid: cae00b357d4ccd8459aa8ce571eb2001, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 6380859602161900847, guid: cae00b357d4ccd8459aa8ce571eb2001, type: 3}
+      propertyPath: Bullet
+      value: 
+      objectReference: {fileID: 8304118603832884418, guid: 0c972eed770f221428231793f84e2297, type: 3}
+    - target: {fileID: 6380859602161900847, guid: cae00b357d4ccd8459aa8ce571eb2001, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 1269080859}
+    - target: {fileID: 7411093048628467702, guid: cae00b357d4ccd8459aa8ce571eb2001, type: 3}
+      propertyPath: MoveSpeed.BaseValue
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -769,7 +805,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_AngularDamping: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
