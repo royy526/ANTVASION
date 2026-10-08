@@ -123,7 +123,7 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 lookAt = mainCamera.ScreenToWorldPoint(Input.mousePosition);
 
-        float angleRad = Mathf.Atan2(lookAt.y - transform.position.y, lookAt.x - transform.position.x);
+        float angleRad = Mathf.Atan2(-lookAt.y - transform.position.y, -lookAt.x - transform.position.x);
         float angleDeg = angleRad * Mathf.Rad2Deg - 90f;
         transform.rotation = Quaternion.Euler(0f, 0f, angleDeg);
     }
