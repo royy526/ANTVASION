@@ -1,23 +1,25 @@
+// Sugerencia general de Clean Code: usar if de una sola línea con llaves cuando sea legible.
+
 using UnityEngine;
 
 public class OLDEnemySpawner : MonoBehaviour
 {
     [Header("Jugador")]
-    public Transform player;
+    public Transform player; // Usar PascalCase
 
     [Header("Enemigos")]
-    public GameObject[] enemyPrefabs;
+    public GameObject[] enemyPrefabs; // Usar PascalCase
 
     [Header("Cantidad de enemigos")]
-    public int minEnemies = 3;
-    public int maxEnemies = 6;
+    public int minEnemies = 3; // Usar PascalCase
+    public int maxEnemies = 6; // Usar PascalCase
 
     [Header("Zona de aparición")]
-    public float spawnDistance = 5f;
+    public float spawnDistance = 5f; // Usar PascalCase; Aclarar el significado o las unidades con Tooltip
 
-    private int enemiesAlive;
-    private bool waveStarted = false;
-    private bool waveCompleted = false;
+    private int enemiesAlive; // Usar _camelCase
+    private bool waveStarted = false; // Usar _camelCase; Revisar: usar un verbo de estado (is, has o can)
+    private bool waveCompleted = false; // Usar _camelCase; Revisar: usar un verbo de estado (is, has o can)
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -49,7 +51,7 @@ public class OLDEnemySpawner : MonoBehaviour
         Vector2 randomDirection = Random.insideUnitCircle.normalized;
 
         Vector2 spawnPosition =
-            (Vector2)player.position + randomDirection * spawnDistance;
+            (Vector2)player.position + randomDirection * spawnDistance; // Aclarar el significado o las unidades con Tooltip
 
         int randomEnemy = Random.Range(0, enemyPrefabs.Length);
 
@@ -69,7 +71,7 @@ public class OLDEnemySpawner : MonoBehaviour
         enemiesAlive++;
     }
 
-    public void EnemyDied()
+    public void EnemyDied() // Respetar el orden de acceso y static
     {
         enemiesAlive--;
 

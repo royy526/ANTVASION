@@ -1,3 +1,5 @@
+// Sugerencia general de Clean Code: usar if de una sola línea con llaves cuando sea legible.
+
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -8,14 +10,14 @@ public class PlayerController : MonoBehaviour
     [Header("Configuración del ataque")]
     public Transform Aim;
     public GameObject Bullet;
-    [SerializeField] private Camera mainCamera;
-    [SerializeField] private GameObject melee;
-    [SerializeField] private float attackDuration = 0.4f;
+    [SerializeField] private Camera mainCamera; // Usar _camelCase; Separar los grupos de acceso con una línea en blanco
+    [SerializeField] private GameObject melee; // Usar _camelCase
+    [SerializeField] private float attackDuration = 0.4f; // Usar _camelCase
 
-    public List<string> Inventory;
+    public List<string> Inventory; // Respetar el orden de acceso y static
 
     private PlayerStats _stats;
-    private Rigidbody2D _rb;
+    private Rigidbody2D _rb; // Sin abreviaciones
     private DamageDealer _meleeDamage;
 
     private Vector2 _moveInput;
@@ -74,7 +76,7 @@ public class PlayerController : MonoBehaviour
 
     private void Melee()
     {
-        if (_isAttacking || _meleeCooldownTimer > 0f) return;
+        if (_isAttacking || _meleeCooldownTimer > 0f) return; // Agregar llaves al if
 
         if (_meleeDamage != null)
         {
@@ -90,7 +92,7 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateMeleeDuration()
     {
-        if (!_isAttacking) return;
+        if (!_isAttacking) return; // Agregar llaves al if
 
         _attackTimer += Time.deltaTime;
 
@@ -103,7 +105,7 @@ public class PlayerController : MonoBehaviour
 
     private void Shoot()
     {
-        if (_shootCooldownTimer > 0f) return;
+        if (_shootCooldownTimer > 0f) return; // Agregar llaves al if
 
         _shootCooldownTimer = _stats.ShootCooldown.Value;
 
@@ -116,15 +118,15 @@ public class PlayerController : MonoBehaviour
         }
 
         bullet.GetComponent<Rigidbody2D>().AddForce(Aim.up * _stats.BulletSpeed.Value, ForceMode2D.Impulse);
-        Destroy(bullet, 2f);
+        Destroy(bullet, 2f); // Revisar: usar una constante o configuración con nombre
     }
 
-    private void PlayerLook()
+    private void PlayerLook() // Usar un verbo en el nombre del método
     {
         Vector3 lookAt = mainCamera.ScreenToWorldPoint(Input.mousePosition);
 
-        float angleRad = Mathf.Atan2(-lookAt.y - transform.position.y, -lookAt.x - transform.position.x);
-        float angleDeg = angleRad * Mathf.Rad2Deg - 90f;
+        float angleRad = Mathf.Atan2(-lookAt.y - transform.position.y, -lookAt.x - transform.position.x); // Sin abreviaciones
+        float angleDeg = angleRad * Mathf.Rad2Deg - 90f; // Sin abreviaciones
         transform.rotation = Quaternion.Euler(0f, 0f, angleDeg);
     }
 

@@ -11,38 +11,38 @@ public class EnemyRoomEncounter : MonoBehaviour
 
 {
     [Header("Encounter")]
-    [SerializeField, Min(1)] private int enemiesToSpawn = 3;
-    [SerializeField] private Transform player;
-    [SerializeField] private GameObject[] enemyPrefabs;
+    [SerializeField, Min(1)] private int enemiesToSpawn = 3; // Usar _camelCase
+    [SerializeField] private Transform player; // Usar _camelCase
+    [SerializeField] private GameObject[] enemyPrefabs; // Usar _camelCase
 
     [Header("Grid")]
-    [SerializeField, Min(0.25f)] private float cellSize = 0.5f;
-    [SerializeField] private LayerMask obstacleMask;
+    [SerializeField, Min(0.25f)] private float cellSize = 0.5f; // Usar _camelCase
+    [SerializeField] private LayerMask obstacleMask; // Usar _camelCase
 
     [Header("Room barriers")]
-    [SerializeField] private bool createPrototypeBarriers = true;
-    [SerializeField] private UnityEvent onRoomCleared;
+    [SerializeField] private bool createPrototypeBarriers = true; // Usar _camelCase; Revisar: usar un verbo de estado (is, has o can)
+    [SerializeField] private UnityEvent onRoomCleared; // Usar _camelCase
 
-    private readonly List<RoomEnemy> aliveEnemies = new();
-    private readonly List<GameObject> barriers = new();
-    [SerializeField] private BoxCollider2D roomBounds;
-    private EnemySpawnGrid spawnGrid;
-    private bool encounterStarted;
-    private bool roomCleared;
+    private readonly List<RoomEnemy> aliveEnemies = new(); // Usar _camelCase
+    private readonly List<GameObject> barriers = new(); // Usar _camelCase
+    [SerializeField] private BoxCollider2D roomBounds; // Usar _camelCase
+    private EnemySpawnGrid spawnGrid; // Usar _camelCase
+    private bool encounterStarted; // Usar _camelCase; Revisar: usar un verbo de estado (is, has o can)
+    private bool roomCleared; // Usar _camelCase; Revisar: usar un verbo de estado (is, has o can)
 
     public int EnemiesAlive => aliveEnemies.Count;
     public bool RoomCleared => roomCleared;
 
     [Range(0f, 1f)]
-    public float myAlpha = 0f;
+    public float myAlpha = 0f; // Usar PascalCase; Respetar el orden de los miembros
 
     private void Awake()
     {
         FindPlayer();
-        EnsurePlayerPhysics();
+        EnsurePlayerPhysics(); // Revisar: una sola responsabilidad
         CreateGrid();
 
-        if (createPrototypeBarriers)
+        if (createPrototypeBarriers) // Agregar llaves al if
             CreatePrototypeBarriers();
 
         SetBarriers(false);
@@ -50,16 +50,16 @@ public class EnemyRoomEncounter : MonoBehaviour
 
     private void Update()
     {
-        if (encounterStarted || player == null)
+        if (encounterStarted || player == null) // Agregar llaves al if
             return;
 
-        if (roomBounds.bounds.Contains(player.position))
+        if (roomBounds.bounds.Contains(player.position)) // Agregar llaves al if
             StartEncounter();
     }
 
     public void StartEncounter()
     {
-        if (encounterStarted)
+        if (encounterStarted) // Agregar llaves al if
             return;
 
         FindPlayer();
@@ -74,7 +74,7 @@ public class EnemyRoomEncounter : MonoBehaviour
         for (int i = 0; i < enemiesToSpawn; i++)
             SpawnEnemy();
 
-        if (aliveEnemies.Count == 0)
+        if (aliveEnemies.Count == 0) // Agregar llaves al if
             CompleteRoom();
     }
 
@@ -90,7 +90,7 @@ public class EnemyRoomEncounter : MonoBehaviour
         if (enemyPrefabs != null && enemyPrefabs.Length > 0)
         {
             GameObject selectedPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
-            if (selectedPrefab == null)
+            if (selectedPrefab == null) // Agregar llaves al if
                 return;
             enemyObject = Instantiate(selectedPrefab, spawnPosition, Quaternion.identity, transform);
         }
@@ -107,33 +107,33 @@ public class EnemyRoomEncounter : MonoBehaviour
     {
         enemy.Died -= HandleEnemyDied;
         aliveEnemies.Remove(enemy);
-        if (aliveEnemies.Count == 0)
+        if (aliveEnemies.Count == 0) // Agregar llaves al if
             CompleteRoom();
     }
 
     private void CompleteRoom()
     {
-        if (roomCleared)
+        if (roomCleared) // Agregar llaves al if
             return;
 
         roomCleared = true;
         SetBarriers(false);
-        onRoomCleared?.Invoke();
+        onRoomCleared?.Invoke(); // Invocar el evento desde un método On...
     }
 
     private void FindPlayer()
     {
-        if (player != null)
+        if (player != null) // Agregar llaves al if
             return;
 
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-        if (playerObject != null)
+        if (playerObject != null) // Agregar llaves al if
             player = playerObject.transform;
     }
 
     private void EnsurePlayerPhysics()
     {
-        if (player == null)
+        if (player == null) // Agregar llaves al if
             return;
 
         Rigidbody2D playerBody = player.GetComponent<Rigidbody2D>();
@@ -144,7 +144,7 @@ public class EnemyRoomEncounter : MonoBehaviour
             playerBody.freezeRotation = true;
         }
 
-        if (player.GetComponent<Collider2D>() == null)
+        if (player.GetComponent<Collider2D>() == null) // Agregar llaves al if
             player.gameObject.AddComponent<BoxCollider2D>();
     }
 
@@ -159,8 +159,8 @@ public class EnemyRoomEncounter : MonoBehaviour
     private void CreatePrototypeBarriers()
     {
         Bounds bounds = roomBounds.bounds;
-        CreateBarrier("North Barrier", new Vector2(bounds.center.x, bounds.max.y), new Vector2(bounds.size.x, 0.35f));
-        CreateBarrier("South Barrier", new Vector2(bounds.center.x, bounds.min.y), new Vector2(bounds.size.x, 0.35f));
+        CreateBarrier("North Barrier", new Vector2(bounds.center.x, bounds.max.y), new Vector2(bounds.size.x, 0.35f)); // Revisar: usar una constante o configuración con nombre
+        CreateBarrier("South Barrier", new Vector2(bounds.center.x, bounds.min.y), new Vector2(bounds.size.x, 0.35f)); // Revisar: usar una constante o configuración con nombre
         CreateBarrier("East Barrier", new Vector2(bounds.max.x, bounds.center.y), new Vector2(0.35f, bounds.size.y));
         CreateBarrier("West Barrier", new Vector2(bounds.min.x, bounds.center.y), new Vector2(0.35f, bounds.size.y));
     }
@@ -182,7 +182,7 @@ public class EnemyRoomEncounter : MonoBehaviour
         
     }
 
-    private static Sprite CreateSquareSprite()
+    private static Sprite CreateSquareSprite() // Respetar el orden de acceso y static
     {
         return Sprite.Create(Texture2D.whiteTexture, new Rect(0f, 0f, 1f, 1f), new Vector2(0.5f, 0.5f), 1f);
     }

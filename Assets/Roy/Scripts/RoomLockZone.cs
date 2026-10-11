@@ -12,9 +12,9 @@ public class RoomLockZone : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(_room == null) return;
+        if (_room == null) return; // Agregar llaves al if
     
-        if (!other.TryGetComponent<PlayerController>(out _)) return;
+        if (!other.TryGetComponent<PlayerController>(out _)) return; // Agregar llaves al if
 
         _room.OnPlayerEnteredZone();
     

@@ -1,6 +1,8 @@
+// Sugerencia general de Clean Code: usar if de una sola línea con llaves cuando sea legible.
+
 using UnityEngine;
 
-public enum RoomType {Start, Normal, Boss, Treasure, Shop, Secret}
+public enum RoomType {Start, Normal, Boss, Treasure, Shop, Secret} // Usar llaves en estilo Allman; Mover el enum público a su propio archivo
 public class Room : MonoBehaviour
 {
 
@@ -14,15 +16,15 @@ public class Room : MonoBehaviour
     public Vector2Int GridPos { get; private set; }
 
     private bool _upConnected, _downConnected, _leftConnected, _rightConnected;
-    private bool _roomStarted;
-    private bool _roomCleared;
+    private bool _roomStarted; // Revisar: usar un verbo de estado (is, has o can); Respetar el orden de los miembros
+    private bool _roomCleared; // Revisar: usar un verbo de estado (is, has o can); Respetar el orden de los miembros
 
-    [SerializeField] private EnemySpawner _spawner;
+    [SerializeField] private EnemySpawner _spawner; // Respetar el orden de los miembros
 
-    [SerializeField] private bool _hasEnemies = true;
+    [SerializeField] private bool _hasEnemies = true; // Respetar el orden de los miembros
 
 
-    public void Setup(RoomType type, Vector2Int gridPos,
+    public void Setup(RoomType type, Vector2Int gridPos, // Sin abreviaciones
                       bool up, bool down, bool left, bool right)
     {
         RoomType = type;
@@ -42,7 +44,7 @@ public class Room : MonoBehaviour
     }
 
 
-    private void Awake()
+    private void Awake() // Respetar el orden de los miembros
     {
         if (_spawner != null)
         {
@@ -50,7 +52,7 @@ public class Room : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
+    private void OnDestroy() // Respetar el orden de los miembros
     {
         if (_spawner != null)
         {
@@ -58,11 +60,11 @@ public class Room : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other) // Respetar el orden de los miembros
     {
-        if (_roomStarted || _roomCleared) return;
-        if (!_hasEnemies) return;
-        if (!other.CompareTag("Player")) return;
+        if (_roomStarted || _roomCleared) return; // Agregar llaves al if
+        if (!_hasEnemies) return; // Agregar llaves al if
+        if (!other.CompareTag("Player")) return; // Agregar llaves al if
 
         StartRoom();
 
@@ -91,10 +93,10 @@ public class Room : MonoBehaviour
 
     private void SetConnectedDoorsLocked(bool locked)
     {
-        if (_upConnected) SetBlocker(_doorUpBlocker, locked);
-        if (_downConnected) SetBlocker(_doorDownBlocker, locked);
-        if (_leftConnected) SetBlocker(_doorLeftBlocker, locked);
-        if (_rightConnected) SetBlocker(_doorRightBlocker, locked);
+        if (_upConnected) SetBlocker(_doorUpBlocker, locked); // Agregar llaves al if
+        if (_downConnected) SetBlocker(_doorDownBlocker, locked); // Agregar llaves al if
+        if (_leftConnected) SetBlocker(_doorLeftBlocker, locked); // Agregar llaves al if
+        if (_rightConnected) SetBlocker(_doorRightBlocker, locked); // Agregar llaves al if
     }
 
     private void SetBlocker(Collider2D blocker, bool active)
@@ -107,7 +109,7 @@ public class Room : MonoBehaviour
         blocker.enabled = active;
     }
 
-    private void OnValidate()
+    private void OnValidate() // Respetar el orden de los miembros
     {
         if (_doorUpBlocker == null || _doorDownBlocker == null ||
             _doorLeftBlocker == null || _doorRightBlocker == null)
@@ -117,7 +119,7 @@ public class Room : MonoBehaviour
 
     public void OnPlayerEnteredZone()
     {
-        if (_roomStarted || _roomCleared || !_hasEnemies) return;
+        if (_roomStarted || _roomCleared || !_hasEnemies) return; // Agregar llaves al if
 
         StartRoom();
     }
