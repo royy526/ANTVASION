@@ -1,3 +1,5 @@
+// Sugerencia general de Clean Code: usar if de una sola línea con llaves cuando sea legible.
+
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -54,7 +56,7 @@ public class EnemySpawner : MonoBehaviour
 
         if (_enemiesAlive <= 0)
         {
-            AllEnemiesDefeated?.Invoke();
+            AllEnemiesDefeated?.Invoke(); // Invocar el evento desde un método On...
         }
     }
 }

@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class cameraMovement : MonoBehaviour
 {
-    public Transform target;
-    public float smoothSpeed = 0.15f;
-    public Vector3 offset = new Vector3(0f, 0f, -10f);
-    public float minX;
-    public float maxX;
-    public float minY;
-    public float maxY;
-    public Camera cam;
+    public Transform target; // Usar PascalCase
+    public float smoothSpeed = 0.15f; // Usar PascalCase
+    public Vector3 offset = new Vector3(0f, 0f, -10f); // Usar PascalCase
+    public float minX; // Usar PascalCase
+    public float maxX; // Usar PascalCase
+    public float minY; // Usar PascalCase
+    public float maxY; // Usar PascalCase
+    public Camera cam; // Usar PascalCase; Sin abreviaciones
 
     void Awake()
     {
@@ -18,7 +18,7 @@ public class cameraMovement : MonoBehaviour
 
     void LateUpdate()
     {
-        if (target == null) return;
+        if (target == null) return; // Agregar llaves al if
 
         Vector3 desiredPosition = target.position + offset;
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);

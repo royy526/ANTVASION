@@ -7,31 +7,31 @@ using UnityEngine;
 public class RoomEnemy : MonoBehaviour
 {
     [Header("Stats")]
-    [SerializeField, Min(1)] private int health = 100;
-    [SerializeField, Min(0)] private int damage = 10;
-    [SerializeField, Min(0f)] private float speed = 2f;
+    [SerializeField, Min(1)] private int health = 100; // Usar _camelCase
+    [SerializeField, Min(0)] private int damage = 10; // Usar _camelCase
+    [SerializeField, Min(0f)] private float speed = 2f; // Usar _camelCase
 
     [Header("Attack")]
-    [SerializeField, Min(0.1f)] private float attackRange = 0.8f;
-    [SerializeField, Min(0.1f)] private float attackCooldown = 1f;
-    [SerializeField] private Animator animator;
-    [SerializeField] private string attackTrigger = "Attack";
+    [SerializeField, Min(0.1f)] private float attackRange = 0.8f; // Usar _camelCase
+    [SerializeField, Min(0.1f)] private float attackCooldown = 1f; // Usar _camelCase
+    [SerializeField] private Animator animator; // Usar _camelCase
+    [SerializeField] private string attackTrigger = "Attack"; // Usar _camelCase
 
     [Header("Separation")]
-    [SerializeField, Min(0.1f)] private float separationRadius = 0.7f;
-    [SerializeField, Min(0f)] private float separationStrength = 0.7f;
+    [SerializeField, Min(0.1f)] private float separationRadius = 0.7f; // Usar _camelCase
+    [SerializeField, Min(0f)] private float separationStrength = 0.7f; // Usar _camelCase
 
     public event Action<RoomEnemy> Died;
 
-    private readonly List<Vector2> path = new();
-    private Rigidbody2D body;
-    private Transform player;
-    private EnemySpawnGrid spawnGrid;
-    private int pathIndex;
-    private float nextPathRefresh;
-    private float nextAttackTime;
-    private Vector2 movement;
-    private bool dead;
+    private readonly List<Vector2> path = new(); // Usar _camelCase
+    private Rigidbody2D body; // Usar _camelCase
+    private Transform player; // Usar _camelCase
+    private EnemySpawnGrid spawnGrid; // Usar _camelCase
+    private int pathIndex; // Usar _camelCase
+    private float nextPathRefresh; // Usar _camelCase
+    private float nextAttackTime; // Usar _camelCase
+    private Vector2 movement; // Usar _camelCase
+    private bool dead; // Usar _camelCase; Revisar: usar un verbo de estado (is, has o can)
 
     private void Awake()
     {
@@ -40,9 +40,9 @@ public class RoomEnemy : MonoBehaviour
         body.freezeRotation = true;
         body.interpolation = RigidbodyInterpolation2D.Interpolate;
 
-        if (GetComponent<Collider2D>() == null)
+        if (GetComponent<Collider2D>() == null) // Agregar llaves al if
             gameObject.AddComponent<CircleCollider2D>();
-        if (animator == null)
+        if (animator == null) // Agregar llaves al if
             animator = GetComponentInChildren<Animator>();
     }
 
@@ -52,7 +52,7 @@ public class RoomEnemy : MonoBehaviour
         spawnGrid = grid;
     }
 
-    private void Update()
+    private void Update() // Respetar el orden de los miembros
     {
         if (dead || player == null)
         {
@@ -84,9 +84,9 @@ public class RoomEnemy : MonoBehaviour
         movement = (desiredDirection + GetSeparationForce() * separationStrength).normalized;
     }
 
-    private void FixedUpdate()
+    private void FixedUpdate() // Respetar el orden de los miembros
     {
-        if (!dead && movement.sqrMagnitude > 0.001f)
+        if (!dead && movement.sqrMagnitude > 0.001f) // Agregar llaves al if
             body.MovePosition(body.position + movement * speed * Time.fixedDeltaTime);
     }
 
@@ -96,12 +96,12 @@ public class RoomEnemy : MonoBehaviour
         foreach (Collider2D nearby in Physics2D.OverlapCircleAll(body.position, separationRadius))
         {
             RoomEnemy other = nearby.GetComponentInParent<RoomEnemy>();
-            if (other == null || other == this)
+            if (other == null || other == this) // Agregar llaves al if
                 continue;
 
             Vector2 offset = body.position - (Vector2)other.transform.position;
             float distance = offset.magnitude;
-            if (distance > 0.001f)
+            if (distance > 0.001f) // Agregar llaves al if
                 force += offset.normalized * (1f - distance / separationRadius);
         }
         return force;
@@ -109,37 +109,37 @@ public class RoomEnemy : MonoBehaviour
 
     private void StartAttackIfReady()
     {
-        if (Time.time < nextAttackTime)
+        if (Time.time < nextAttackTime) // Agregar llaves al if
             return;
 
         nextAttackTime = Time.time + attackCooldown;
-        if (animator != null && !string.IsNullOrEmpty(attackTrigger))
+        if (animator != null && !string.IsNullOrEmpty(attackTrigger)) // Agregar llaves al if
             animator.SetTrigger(attackTrigger);
     }
 
     // Attack animation (to do)
-    public void DealAttackHit()
+    public void DealAttackHit() // Respetar el orden de acceso y static; Revisar si este código es necesario
     {
         // Player damage 
     }
 
     public void TakeDamage(int amount)
     {
-        if (dead || amount <= 0)
+        if (dead || amount <= 0) // Agregar llaves al if
             return;
 
         health -= amount;
-        if (health <= 0)
+        if (health <= 0) // Agregar llaves al if
             Die();
     }
 
-    private void Die()
+    private void Die() // Revisar si se puede usar retorno temprano
     {
-        if (dead)
+        if (dead) // Agregar llaves al if
             return;
 
         dead = true;
-        Died?.Invoke(this);
+        Died?.Invoke(this); // Invocar el evento desde un método On...
         Destroy(gameObject);
     }
 }

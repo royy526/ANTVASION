@@ -1,3 +1,5 @@
+// Sugerencia general de Clean Code: usar if de una sola línea con llaves cuando sea legible.
+
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -12,7 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject _melee;
     [SerializeField] private float _attackDuration = 0.4f;
 
-    public List<string> Inventory;
+    public List<string> Inventory; // Respetar el orden de acceso y static
 
     private PlayerStats _stats;
     private Rigidbody2D _rigidBody2D;
@@ -74,7 +76,7 @@ public class PlayerController : MonoBehaviour
 
     private void Melee()
     {
-        if (_isAttacking || _meleeCooldownTimer > 0f) return;
+        if (_isAttacking || _meleeCooldownTimer > 0f) return; // Agregar llaves al if
 
         if (_meleeDamage != null)
         {
@@ -90,7 +92,7 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateMeleeDuration()
     {
-        if (!_isAttacking) return;
+        if (!_isAttacking) return; // Agregar llaves al if
 
         _attackTimer += Time.deltaTime;
 
@@ -103,7 +105,7 @@ public class PlayerController : MonoBehaviour
 
     private void Shoot()
     {
-        if (_shootCooldownTimer > 0f) return;
+        if (_shootCooldownTimer > 0f) return; // Agregar llaves al if
 
         _shootCooldownTimer = _stats.ShootCooldown.Value;
 
@@ -116,10 +118,10 @@ public class PlayerController : MonoBehaviour
         }
 
         bullet.GetComponent<Rigidbody2D>().AddForce(Aim.up * _stats.BulletSpeed.Value, ForceMode2D.Impulse);
-        Destroy(bullet, 2f);
+        Destroy(bullet, 2f); // Revisar: usar una constante o configuración con nombre
     }
 
-    private void PlayerLook()
+    private void PlayerLook() // Usar un verbo en el nombre del método
     {
         Vector3 lookAt = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
 

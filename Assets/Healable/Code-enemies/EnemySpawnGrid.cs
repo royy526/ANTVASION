@@ -6,19 +6,19 @@ using UnityEngine;
 
 public class EnemySpawnGrid : MonoBehaviour
 {
-    private static readonly Vector2Int[] Directions =
+    private static readonly Vector2Int[] Directions = // Usar _camelCase
     {
         new(-1, 0), new(1, 0), new(0, -1), new(0, 1),
         new(-1, -1), new(-1, 1), new(1, -1), new(1, 1)
     };
 
-    private readonly HashSet<Vector2Int> reservedSpawnCells = new();
-    private Grid grid;
-    private float cellSize;
-    private int width;
-    private int height;
-    [SerializeField] private BoxCollider2D Bounds;
-    private LayerMask obstacleMask;
+    private readonly HashSet<Vector2Int> reservedSpawnCells = new(); // Usar _camelCase
+    private Grid grid; // Usar _camelCase
+    private float cellSize; // Usar _camelCase
+    private int width; // Usar _camelCase
+    private int height; // Usar _camelCase
+    [SerializeField] private BoxCollider2D Bounds; // Usar _camelCase
+    private LayerMask obstacleMask; // Usar _camelCase
 
     public void Configure(Bounds bounds, float requestedCellSize, LayerMask requestedObstacleMask)
     {
@@ -46,7 +46,7 @@ public class EnemySpawnGrid : MonoBehaviour
         for (int x = 0; x < width; x++)
         {
             Vector2Int cell = new(x, y);
-            if (!reservedSpawnCells.Contains(cell) && IsWalkable(cell))
+            if (!reservedSpawnCells.Contains(cell) && IsWalkable(cell)) // Agregar llaves al if
                 validCells.Add(cell);
         }
 
@@ -67,7 +67,7 @@ public class EnemySpawnGrid : MonoBehaviour
         outputPath.Clear();
         Vector2Int start = FindClosestWalkable(WorldToCell(from));
         Vector2Int goal = FindClosestWalkable(WorldToCell(to));
-        if (!IsInside(start) || !IsInside(goal))
+        if (!IsInside(start) || !IsInside(goal)) // Agregar llaves al if
             return false;
 
         List<Vector2Int> open = new() { start };
@@ -80,7 +80,7 @@ public class EnemySpawnGrid : MonoBehaviour
         {
             int best = 0;
             for (int i = 1; i < open.Count; i++)
-                if (fScore.GetValueOrDefault(open[i], float.MaxValue) < fScore.GetValueOrDefault(open[best], float.MaxValue))
+                if (fScore.GetValueOrDefault(open[i], float.MaxValue) < fScore.GetValueOrDefault(open[best], float.MaxValue)) // Agregar llaves al if
                     best = i;
 
             Vector2Int current = open[best];
@@ -95,21 +95,21 @@ public class EnemySpawnGrid : MonoBehaviour
             foreach (Vector2Int direction in Directions)
             {
                 Vector2Int next = current + direction;
-                if (!IsWalkable(next) || closed.Contains(next))
+                if (!IsWalkable(next) || closed.Contains(next)) // Agregar llaves al if
                     continue;
 
                 bool diagonal = direction.x != 0 && direction.y != 0;
-                if (diagonal && (!IsWalkable(current + new Vector2Int(direction.x, 0)) || !IsWalkable(current + new Vector2Int(0, direction.y))))
+                if (diagonal && (!IsWalkable(current + new Vector2Int(direction.x, 0)) || !IsWalkable(current + new Vector2Int(0, direction.y)))) // Agregar llaves al if
                     continue;
 
-                float tentativeG = gScore[current] + (diagonal ? 1.41421356f : 1f);
-                if (tentativeG >= gScore.GetValueOrDefault(next, float.MaxValue))
+                float tentativeG = gScore[current] + (diagonal ? 1.41421356f : 1f); // Usar nombres descriptivos para los costos y las posiciones
+                if (tentativeG >= gScore.GetValueOrDefault(next, float.MaxValue)) // Agregar llaves al if
                     continue;
 
                 cameFrom[next] = current;
                 gScore[next] = tentativeG;
                 fScore[next] = tentativeG + Heuristic(next, goal);
-                if (!open.Contains(next))
+                if (!open.Contains(next)) // Agregar llaves al if
                     open.Add(next);
             }
         }
@@ -119,7 +119,7 @@ public class EnemySpawnGrid : MonoBehaviour
 
     private Vector2Int FindClosestWalkable(Vector2Int origin)
     {
-        if (IsWalkable(origin))
+        if (IsWalkable(origin)) // Agregar llaves al if
             return origin;
 
         int maximumDistance = Mathf.Max(width, height);
@@ -127,11 +127,11 @@ public class EnemySpawnGrid : MonoBehaviour
         for (int y = -distance; y <= distance; y++)
         for (int x = -distance; x <= distance; x++)
         {
-            if (Mathf.Abs(x) != distance && Mathf.Abs(y) != distance)
+            if (Mathf.Abs(x) != distance && Mathf.Abs(y) != distance) // Agregar llaves al if
                 continue;
 
             Vector2Int candidate = origin + new Vector2Int(x, y);
-            if (IsWalkable(candidate))
+            if (IsWalkable(candidate)) // Agregar llaves al if
                 return candidate;
         }
 
@@ -152,10 +152,10 @@ public class EnemySpawnGrid : MonoBehaviour
 
     private bool IsWalkable(Vector2Int cell)
     {
-        if (!IsInside(cell))
+        if (!IsInside(cell)) // Agregar llaves al if
             return false;
 
-        if (obstacleMask.value == 0)
+        if (obstacleMask.value == 0) // Agregar llaves al if
             return true;
 
         return Physics2D.OverlapCircle(CellCenter(cell), cellSize * 0.35f, obstacleMask) == null;
@@ -168,5 +168,5 @@ public class EnemySpawnGrid : MonoBehaviour
         return new Vector2Int(cell.x, cell.y);
     }
     private Vector2 CellCenter(Vector2Int cell) => grid.GetCellCenterWorld(new Vector3Int(cell.x, cell.y, 0));
-    private static float Heuristic(Vector2Int a, Vector2Int b) => Vector2Int.Distance(a, b);
+    private static float Heuristic(Vector2Int a, Vector2Int b) => Vector2Int.Distance(a, b); // Respetar el orden de acceso y static
 }

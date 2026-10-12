@@ -1,20 +1,22 @@
+// Sugerencia general de Clean Code: usar if de una sola línea con llaves cuando sea legible.
+
 using UnityEngine;
 
 
 [RequireComponent (typeof(Rigidbody2D))]
 public class Enemy : MonoBehaviour
 {
-    public float health;
+    public float health; // Usar PascalCase
     public float MaxHealth = 6f;
-    public float damage = 10;
-    public float speed = .5f;
-    private bool _isDead;
+    public float damage = 10; // Usar PascalCase
+    public float speed = .5f; // Usar PascalCase
+    private bool _isDead; // Separar los grupos de acceso con una línea en blanco
 
     [SerializeField] private float _activationDelay = 0.75f;
 
-    protected Transform player;
-    protected EnemySpawner spawner;
-    protected Rigidbody2D rb;
+    protected Transform player; // Usar _camelCase; Respetar el orden de acceso y static
+    protected EnemySpawner spawner; // Usar _camelCase
+    protected Rigidbody2D rb; // Usar _camelCase; Sin abreviaciones
 
     private float _activeTimer;
 
@@ -57,10 +59,10 @@ public class Enemy : MonoBehaviour
         rb.linearVelocity = direction * speed;
     }
 
-    public virtual void TakeDamage(float damageAmount)
+    public virtual void TakeDamage(float damageAmount) // Respetar el orden de acceso y static
     {
         Debug.Log($"[{name}] recibe {damageAmount} de daño, vida antes={health}", this);
-        if (_isDead) return;
+        if (_isDead) return; // Agregar llaves al if
 
         health -= damageAmount;
 

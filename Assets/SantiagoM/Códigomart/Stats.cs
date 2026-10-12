@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ModifierType { Flat, Percent }
+public enum ModifierType { Flat, Percent } // Usar llaves en estilo Allman; Mover el enum público a su propio archivo
 
 public class StatModifier
 {
@@ -21,11 +21,11 @@ public class StatModifier
 [Serializable]
 public class Stat
 {
-    public float BaseValue;
+    public float BaseValue; // Respetar el orden de los miembros
 
-    private readonly List<StatModifier> _modifiers = new List<StatModifier>();
+    private readonly List<StatModifier> _modifiers = new List<StatModifier>(); // Respetar el orden de los miembros
 
-    public float Value
+    public float Value // Respetar el orden de los miembros
     {
         get
         {
@@ -34,7 +34,7 @@ public class Stat
 
             foreach (StatModifier m in _modifiers)
             {
-                if (m.Type == ModifierType.Flat) flat += m.Value;
+                if (m.Type == ModifierType.Flat) flat += m.Value; // Agregar llaves al if
                 else percent += m.Value;
             }
 
