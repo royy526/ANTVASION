@@ -8,14 +8,14 @@ public class PlayerController : MonoBehaviour
     [Header("Configuración del ataque")]
     public Transform Aim;
     public GameObject Bullet;
-    [SerializeField] private Camera mainCamera;
-    [SerializeField] private GameObject melee;
-    [SerializeField] private float attackDuration = 0.4f;
+    [SerializeField] private Camera _mainCamera;
+    [SerializeField] private GameObject _melee;
+    [SerializeField] private float _attackDuration = 0.4f;
 
     public List<string> Inventory;
 
     private PlayerStats _stats;
-    private Rigidbody2D _rb;
+    private Rigidbody2D _rigidBody2D;
     private DamageDealer _meleeDamage;
 
     private Vector2 _moveInput;
@@ -26,12 +26,12 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        _rb = GetComponent<Rigidbody2D>();
+        _rigidBody2D = GetComponent<Rigidbody2D>();
         _stats = GetComponent<PlayerStats>();
 
-        if (melee != null)
+        if (_melee != null)
         {
-            _meleeDamage = melee.GetComponent<DamageDealer>();
+            _meleeDamage = _melee.GetComponent<DamageDealer>();
         }
     }
 
@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _rb.linearVelocity = _moveInput * _stats.MoveSpeed.Value;
+        _rigidBody2D.linearVelocity = _moveInput * _stats.MoveSpeed.Value;
     }
 
     private void ReadMovementInput()
@@ -81,7 +81,7 @@ public class PlayerController : MonoBehaviour
             _meleeDamage.Damage = _stats.Damage.Value;
         }
 
-        melee.SetActive(true);
+        _melee.SetActive(true);
         _isAttacking = true;
         _attackTimer = 0f;
         _meleeCooldownTimer = _stats.MeleeCooldown.Value;
@@ -94,10 +94,10 @@ public class PlayerController : MonoBehaviour
 
         _attackTimer += Time.deltaTime;
 
-        if (_attackTimer >= attackDuration)
+        if (_attackTimer >= _attackDuration)
         {
             _isAttacking = false;
-            melee.SetActive(false);
+            _melee.SetActive(false);
         }
     }
 
@@ -121,7 +121,7 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerLook()
     {
-        Vector3 lookAt = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 lookAt = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
 
         float angleRad = Mathf.Atan2(-lookAt.y - transform.position.y, -lookAt.x - transform.position.x);
         float angleDeg = angleRad * Mathf.Rad2Deg - 90f;
