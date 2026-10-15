@@ -227,7 +227,7 @@ public class MapGeneratos : MonoBehaviour // Corregir la ortografía del nombre;
 
         if (isValid)
         {
-            Debug.Log("[ValidateMap] mapa vlaido: todas las verificaciones pasaron");
+            Debug.Log("[ValidateMap] mapa vlaido");
         }
     }
 
@@ -282,8 +282,6 @@ public class MapGeneratos : MonoBehaviour // Corregir la ortografía del nombre;
 
             roomComponent.Setup(node.type, node.gridPos, up, down, left, right);
         }
-
-        Debug.Log($"[InstantiateRooms] termino. se crearon {transform.childCount} salas como hijas de MapGenerator");
     }
 
     private GameObject GetPrefabForType(RoomType type)
