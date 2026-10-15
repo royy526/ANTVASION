@@ -1,7 +1,9 @@
+// Sugerencia general de Clean Code: usar if de una sola línea con llaves cuando sea legible.
+
 using UnityEngine;
 using System.Collections.Generic;
 
-public class MapGeneratos : MonoBehaviour
+public class MapGeneratos : MonoBehaviour // Corregir la ortografía del nombre; Usar inglés
 {
     [Header("Generacion")]
     [SerializeField] private int _targetRoomCount = 10;
@@ -9,19 +11,19 @@ public class MapGeneratos : MonoBehaviour
     [SerializeField] private int _maxAttempts = 300;
     [SerializeField] private int _maxRegenerations = 20;
     [SerializeField] private Vector2Int _gridHalfSize = new Vector2Int(4, 4);
-    [SerializeField] [Range(0f, 1f)] private float _jumpChance = 0.15f;
+    [SerializeField] [Range(0f, 1f)] private float _jumpChance = 0.15f; // Aclarar el significado o las unidades con Tooltip
 
     [Header("Salas")]
-    [SerializeField] private GameObject normalRoomPrefab;
-    [SerializeField] private GameObject startRoomPrefab;
-    [SerializeField] private GameObject bossRoomPrefab;
-    [SerializeField] private GameObject treasureRoomPrefab;
-    [SerializeField] private GameObject shopRoomPrefab;
-    [SerializeField] private Vector2 roomWorldSize = new Vector2(20f, 11f);
+    [SerializeField] private GameObject normalRoomPrefab; // Usar _camelCase
+    [SerializeField] private GameObject startRoomPrefab; // Usar _camelCase
+    [SerializeField] private GameObject bossRoomPrefab; // Usar _camelCase
+    [SerializeField] private GameObject treasureRoomPrefab; // Usar _camelCase
+    [SerializeField] private GameObject shopRoomPrefab; // Usar _camelCase
+    [SerializeField] private Vector2 roomWorldSize = new Vector2(20f, 11f); // Usar _camelCase
 
     private Dictionary<Vector2Int, RoomNode> rooms = new Dictionary<Vector2Int, RoomNode>();
 
-    private static readonly Vector2Int[] Directions = {Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right};
+    private static readonly Vector2Int[] Directions = {Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right}; // Usar _camelCase; Respetar el orden de acceso y static
 
     void Start()
     {
@@ -54,7 +56,7 @@ public class MapGeneratos : MonoBehaviour
         rooms.Clear();
 
         Vector2Int current = Vector2Int.zero;
-        var start = new RoomNode(current) {type = RoomType.Start};
+        var start = new RoomNode(current) {type = RoomType.Start}; // Usar el tipo explícito en lugar de var
         rooms.Add(current, start);
         
         int attempts = 0;
@@ -66,7 +68,7 @@ public class MapGeneratos : MonoBehaviour
             Vector2Int direction = Directions[Random.Range(0, Directions.Length)];
             Vector2Int next = current + direction;
 
-            if (!IsInsideGrid(next))
+            if (!IsInsideGrid(next)) // Agregar llaves al if
             continue;
 
             if (rooms.ContainsKey(next))
@@ -75,10 +77,10 @@ public class MapGeneratos : MonoBehaviour
             }
             else
             {
-                if (CountOccupiedNeighbours(next) > 1)
+                if (CountOccupiedNeighbours(next) > 1) // Agregar llaves al if
                 continue;
 
-                var newRoom = new RoomNode(next);
+                var newRoom = new RoomNode(next); // Usar el tipo explícito en lugar de var
                 rooms.Add(next, newRoom);
 
                 ConnectRooms(current, next);
@@ -88,23 +90,23 @@ public class MapGeneratos : MonoBehaviour
 
             if (Random.value < _jumpChance)
             {
-                var keys = new List<Vector2Int>(rooms.Keys);
+                var keys = new List<Vector2Int>(rooms.Keys); // Usar el tipo explícito en lugar de var
                 current = keys[Random.Range(0, keys.Count)];
             }
         }
     }
 
-    private bool IsInsideGrid(Vector2Int pos)
+    private bool IsInsideGrid(Vector2Int pos) // Sin abreviaciones
     {
         return Mathf.Abs(pos.x) <= _gridHalfSize.x && Mathf.Abs(pos.y) <= _gridHalfSize.y;
     }
 
-    private int CountOccupiedNeighbours(Vector2Int pos)
+    private int CountOccupiedNeighbours(Vector2Int pos) // Sin abreviaciones
     {
         int count = 0;
-        foreach (var dir in Directions)
+        foreach (var dir in Directions) // Usar el tipo explícito en lugar de var
         {
-            if (rooms.ContainsKey(pos + dir))
+            if (rooms.ContainsKey(pos + dir)) // Agregar llaves al if
             count++;
         }
         return count;
@@ -112,8 +114,8 @@ public class MapGeneratos : MonoBehaviour
 
     private void ConnectRooms(Vector2Int a, Vector2Int b)
     {
-        rooms[a].connections.Add(b-a);
-        rooms[b].connections.Add(a-b);
+        rooms[a].connections.Add(b-a); // Agregar espacios alrededor del operador
+        rooms[b].connections.Add(a-b); // Agregar espacios alrededor del operador
     }
 
     private void AssignSpecialRooms()
@@ -121,9 +123,9 @@ public class MapGeneratos : MonoBehaviour
         Dictionary<Vector2Int, int> distances = ComputeDistanceFromStart();
 
         List<Vector2Int> leaves = new List<Vector2Int>();
-        foreach(var kv in rooms)
+        foreach (var kv in rooms) // Usar el tipo explícito en lugar de var
         {
-            if (kv.Value.type == RoomType.Normal && kv.Value.connections.Count == 1)
+            if (kv.Value.type == RoomType.Normal && kv.Value.connections.Count == 1) // Agregar llaves al if
             leaves.Add(kv.Key);
         }
 
@@ -135,7 +137,7 @@ public class MapGeneratos : MonoBehaviour
 
         leaves.Sort((a, b) => distances[b].CompareTo(distances[a]));
 
-        Vector2Int bossPos = leaves[0];
+        Vector2Int bossPos = leaves[0]; // Sin abreviaciones
         rooms[bossPos].type = RoomType.Boss;
         leaves.RemoveAt(0);
 
@@ -155,10 +157,10 @@ public class MapGeneratos : MonoBehaviour
 
     private Dictionary<Vector2Int, int> ComputeDistanceFromStart()
     {
-        var distances = new Dictionary<Vector2Int, int>();
-        var queue = new Queue<Vector2Int>();
+        var distances = new Dictionary<Vector2Int, int>(); // Usar el tipo explícito en lugar de var
+        var queue = new Queue<Vector2Int>(); // Usar el tipo explícito en lugar de var
 
-        Vector2Int startPos = Vector2Int.zero;
+        Vector2Int startPos = Vector2Int.zero; // Sin abreviaciones
         distances[startPos] = 0;
         queue.Enqueue(startPos);
 
@@ -166,7 +168,7 @@ public class MapGeneratos : MonoBehaviour
         {
             Vector2Int current = queue.Dequeue();
 
-            foreach(var direction in rooms[current].connections)
+            foreach (var direction in rooms[current].connections) // Usar el tipo explícito en lugar de var
             {
                 Vector2Int neighbor = current + direction;
 
@@ -180,18 +182,18 @@ public class MapGeneratos : MonoBehaviour
         return distances;
     }
 
-    private void ValidateMap()
+    private void ValidateMap() // Revisar: una sola responsabilidad
     {
         bool isValid = true;
 
-        foreach(var kv in rooms)
+        foreach (var kv in rooms) // Usar el tipo explícito en lugar de var
         {
-            Vector2Int pos = kv.Key;
+            Vector2Int pos = kv.Key; // Sin abreviaciones
             RoomNode node = kv.Value;
 
-            foreach(var direction in node.connections)
+            foreach (var direction in node.connections) // Usar el tipo explícito en lugar de var
             {
-                Vector2Int neighborPos = pos + direction;
+                Vector2Int neighborPos = pos + direction; // Sin abreviaciones
 
                 if (!rooms.ContainsKey(neighborPos))
                 {
@@ -201,7 +203,7 @@ public class MapGeneratos : MonoBehaviour
                 }
 
                 Vector2Int oppositeDirection = -direction;
-                if(!rooms[neighborPos].connections.Contains(oppositeDirection))
+                if (!rooms[neighborPos].connections.Contains(oppositeDirection))
                 {
                     Debug.LogError($"[ValidateMap] conexion unilateral detectada: {pos} -> {neighborPos} existe, pero {neighborPos} -> {pos} no");
                     isValid = false;
@@ -209,7 +211,7 @@ public class MapGeneratos : MonoBehaviour
             }
         }
 
-        foreach(var pos in rooms.Keys)
+        foreach (var pos in rooms.Keys) // Usar el tipo explícito en lugar de var
         {
             if (!IsInsideGrid(pos))
             {
@@ -225,31 +227,32 @@ public class MapGeneratos : MonoBehaviour
 
         if (isValid)
         {
-            Debug.Log("[ValidateMap] mapa vlaido: todas las verificaciones pasaron");
+            Debug.Log("[ValidateMap] mapa vlaido");
         }
     }
 
     private bool ValidateSingleType(RoomType type, bool exactlyOne)
     {
         int count = 0;
-        foreach(var node in rooms.Values)
+        foreach (var node in rooms.Values) // Usar el tipo explícito en lugar de var
         {
             if (node.type == type)
             {
                 count++;
             }
 
-            if (exactlyOne && count !=1)
-            {
-                Debug.LogError($"[ValidateMap] se esperaba exactamente 1 sala del tipo {type}, pero hay {count}");
-                return false;
-            }
+            
+        }
+        if (exactlyOne && count != 1)
+        {
+            Debug.LogError($"[ValidateMap] se esperaba exactamente 1 sala del tipo {type}, pero hay {count}");
+            return false;
+        }
 
-            if (!exactlyOne && count > 1)
-            {
-                Debug.LogError($"[ValidateMap] no deberia de haber mas de 1 sala de tipo {type}, pero hay {count}");
-                return false;
-            }
+        if (!exactlyOne && count > 1)
+        {
+            Debug.LogError($"[ValidateMap] no deberia de haber mas de 1 sala de tipo {type}, pero hay {count}");
+            return false;
         }
 
         return true;
@@ -257,9 +260,9 @@ public class MapGeneratos : MonoBehaviour
 
     private void InstantiateRooms()
     {
-        foreach(var node in rooms.Values)
+        foreach (var node in rooms.Values) // Usar el tipo explícito en lugar de var
         {
-            Vector3 worldPos = new Vector3(node.gridPos.x * roomWorldSize.x, node.gridPos.y * roomWorldSize.y, 0f);
+            Vector3 worldPos = new Vector3(node.gridPos.x * roomWorldSize.x, node.gridPos.y * roomWorldSize.y, 0f); // Sin abreviaciones
 
             GameObject prefab = GetPrefabForType(node.type);
             GameObject instance = Instantiate(prefab, worldPos, Quaternion.identity, transform);
@@ -272,26 +275,24 @@ public class MapGeneratos : MonoBehaviour
                 continue;
             }
 
-            bool up = node.connections.Contains(Vector2Int.up);
-            bool down = node.connections.Contains(Vector2Int.down);
-            bool right = node.connections.Contains(Vector2Int.right);
-            bool left = node.connections.Contains(Vector2Int.left);
+            bool up = node.connections.Contains(Vector2Int.up); // Revisar: usar un verbo de estado (is, has o can)
+            bool down = node.connections.Contains(Vector2Int.down); // Revisar: usar un verbo de estado (is, has o can)
+            bool right = node.connections.Contains(Vector2Int.right); // Revisar: usar un verbo de estado (is, has o can)
+            bool left = node.connections.Contains(Vector2Int.left); // Revisar: usar un verbo de estado (is, has o can)
 
             roomComponent.Setup(node.type, node.gridPos, up, down, left, right);
         }
-
-        Debug.Log($"[InstantiateRooms] termino. se crearon {transform.childCount} salas como hijas de MapGenerator");
     }
 
     private GameObject GetPrefabForType(RoomType type)
     {
-        switch(type)
+        switch (type)
         {
             case RoomType.Start: return startRoomPrefab;
-            case RoomType.Boss: return bossRoomPrefab;
-            case RoomType.Treasure: return treasureRoomPrefab;
-            case RoomType.Shop: return shopRoomPrefab;
-            default: return normalRoomPrefab;
+            case RoomType.Boss: return bossRoomPrefab; // Separar los case con una línea en blanco
+            case RoomType.Treasure: return treasureRoomPrefab; // Separar los case con una línea en blanco
+            case RoomType.Shop: return shopRoomPrefab; // Separar los case con una línea en blanco
+            default: return normalRoomPrefab; // Separar los case con una línea en blanco
         }
     }
 
@@ -299,7 +300,7 @@ public class MapGeneratos : MonoBehaviour
     {
         Dictionary<Vector2Int, int> distances = ComputeDistanceFromStart();
 
-        foreach (var kv in rooms)
+        foreach (var kv in rooms) // Usar el tipo explícito en lugar de var
         {
             RoomNode node = kv.Value;
             int distance = distances.ContainsKey(node.gridPos) ? distances[node.gridPos] : -1;

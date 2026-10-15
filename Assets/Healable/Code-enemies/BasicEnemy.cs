@@ -6,8 +6,8 @@ public class BasicEnemy : Enemy
     {
         base.Start();
 
-        health = 20;
+        health = 4;
         damage = 10;
-        speed = 2f;
+        speed = .2f;
     }
 }
