@@ -7,139 +7,159 @@ using UnityEngine;
 public class RoomEnemy : MonoBehaviour
 {
     [Header("Stats")]
-    [SerializeField, Min(1)] private int health = 100;
-    [SerializeField, Min(0)] private int damage = 10;
-    [SerializeField, Min(0f)] private float speed = 2f;
+    [SerializeField, Min(1)] private int _health = 100;
+    [SerializeField, Min(0)] private int _damage = 10;
+    [SerializeField, Min(0f)] private float _speed = 2f;
 
     [Header("Attack")]
-    [SerializeField, Min(0.1f)] private float attackRange = 0.8f;
-    [SerializeField, Min(0.1f)] private float attackCooldown = 1f;
-    [SerializeField] private Animator animator;
-    [SerializeField] private string attackTrigger = "Attack";
+    [SerializeField, Min(0.1f)] private float _attackRange = 0.8f;
+    [SerializeField, Min(0.1f)] private float _attackCooldown = 1f;
+    [SerializeField] private Animator _animator;
+    [SerializeField] private string _attackTrigger = "Attack";
 
     [Header("Separation")]
-    [SerializeField, Min(0.1f)] private float separationRadius = 0.7f;
-    [SerializeField, Min(0f)] private float separationStrength = 0.7f;
+    [SerializeField, Min(0.1f)] private float _separationRadius = 0.7f;
+    [SerializeField, Min(0f)] private float _separationStrength = 0.7f;
 
     public event Action<RoomEnemy> Died;
 
-    private readonly List<Vector2> path = new();
-    private Rigidbody2D body;
-    private Transform player;
-    private EnemySpawnGrid spawnGrid;
-    private int pathIndex;
-    private float nextPathRefresh;
-    private float nextAttackTime;
-    private Vector2 movement;
-    private bool dead;
+    private readonly List<Vector2> _path = new();
+    private Rigidbody2D _body;
+    private Transform _player;
+    private EnemySpawnGrid _spawnGrid;
+    private int _pathIndex;
+    private float _nextPathRefresh;
+    private float _nextAttackTime;
+    private Vector2 _movement;
+    private bool _isDead;
 
     private void Awake()
     {
-        body = GetComponent<Rigidbody2D>();
-        body.gravityScale = 0f;
-        body.freezeRotation = true;
-        body.interpolation = RigidbodyInterpolation2D.Interpolate;
+        _body = GetComponent<Rigidbody2D>();
+        _body.gravityScale = 0f;
+        _body.freezeRotation = true;
+        _body.interpolation = RigidbodyInterpolation2D.Interpolate;
 
         if (GetComponent<Collider2D>() == null)
+        {
             gameObject.AddComponent<CircleCollider2D>();
-        if (animator == null)
-            animator = GetComponentInChildren<Animator>();
+        }
+        if (_animator == null)
+        {
+            _animator = GetComponentInChildren<Animator>();
+        }
     }
 
     public void Initialize(Transform target, EnemySpawnGrid grid)
     {
-        player = target;
-        spawnGrid = grid;
+        _player = target;
+        _spawnGrid = grid;
     }
 
     private void Update()
     {
-        if (dead || player == null)
+        if (_isDead || _player == null)
         {
-            movement = Vector2.zero;
-            return;
+            _movement = Vector2.zero;
+            {
+                return;
+            }
         }
 
-        Vector2 toPlayer = (Vector2)player.position - body.position;
-        if (toPlayer.magnitude <= attackRange)
+        Vector2 toPlayer = (Vector2)_player.position - _body.position;
+        if (toPlayer.magnitude <= _attackRange)
         {
-            movement = Vector2.zero;
+            _movement = Vector2.zero;
             StartAttackIfReady();
             return;
         }
 
-        if (Time.time >= nextPathRefresh)
+        if (Time.time >= _nextPathRefresh)
         {
-            nextPathRefresh = Time.time + 0.25f;
-            spawnGrid.TryGetPath(body.position, player.position, path);
-            pathIndex = 0;
+            _nextPathRefresh = Time.time + 0.25f;
+            _spawnGrid.TryGetPath(_body.position, _player.position, _path);
+            _pathIndex = 0;
         }
 
-        while (pathIndex < path.Count && Vector2.Distance(body.position, path[pathIndex]) < 0.15f)
-            pathIndex++;
+        while (_pathIndex < _path.Count && Vector2.Distance(_body.position, _path[_pathIndex]) < 0.15f)
+            _pathIndex++;
 
-        Vector2 desiredDirection = pathIndex < path.Count
-            ? (path[pathIndex] - body.position).normalized
-            : toPlayer.normalized;
-        movement = (desiredDirection + GetSeparationForce() * separationStrength).normalized;
+        Vector2 desiredDirection = _pathIndex < _path.Count ? (_path[_pathIndex] - _body.position).normalized : toPlayer.normalized;
+        _movement = (desiredDirection + GetSeparationForce() * _separationStrength).normalized;
     }
 
     private void FixedUpdate()
     {
-        if (!dead && movement.sqrMagnitude > 0.001f)
-            body.MovePosition(body.position + movement * speed * Time.fixedDeltaTime);
+        if (!_isDead && _movement.sqrMagnitude > 0.001f)
+        {
+            _body.MovePosition(_body.position + _movement * _speed * Time.fixedDeltaTime);
+        }
     }
 
     private Vector2 GetSeparationForce()
     {
         Vector2 force = Vector2.zero;
-        foreach (Collider2D nearby in Physics2D.OverlapCircleAll(body.position, separationRadius))
+        foreach (Collider2D nearby in Physics2D.OverlapCircleAll(_body.position, _separationRadius))
         {
             RoomEnemy other = nearby.GetComponentInParent<RoomEnemy>();
             if (other == null || other == this)
+            {
                 continue;
+            }
 
-            Vector2 offset = body.position - (Vector2)other.transform.position;
+            Vector2 offset = _body.position - (Vector2)other.transform.position;
             float distance = offset.magnitude;
             if (distance > 0.001f)
-                force += offset.normalized * (1f - distance / separationRadius);
+            {
+                force += offset.normalized * (1f - distance / _separationRadius);
+            }
         }
         return force;
     }
 
     private void StartAttackIfReady()
     {
-        if (Time.time < nextAttackTime)
+        if (Time.time < _nextAttackTime)
+        {
             return;
+        }
 
-        nextAttackTime = Time.time + attackCooldown;
-        if (animator != null && !string.IsNullOrEmpty(attackTrigger))
-            animator.SetTrigger(attackTrigger);
-    }
-
-    // Attack animation (to do)
-    public void DealAttackHit()
-    {
-        // Player damage 
+        _nextAttackTime = Time.time + _attackCooldown;
+        if (_animator != null && !string.IsNullOrEmpty(_attackTrigger))
+        {
+            _animator.SetTrigger(_attackTrigger);
+        }
     }
 
     public void TakeDamage(int amount)
     {
-        if (dead || amount <= 0)
+        if (_isDead || amount <= 0)
+        {
             return;
+        }
 
-        health -= amount;
-        if (health <= 0)
+        _health -= amount;
+        if (_health <= 0)
+        {
             Die();
+        }
     }
 
     private void Die()
     {
-        if (dead)
+        if (_isDead)
+        {
             return;
+        }
 
-        dead = true;
-        Died?.Invoke(this);
+        _isDead = true;
+        OnDie();
         Destroy(gameObject);
     }
+
+    protected void OnDie()
+    {
+        Died?.Invoke(this);
+    }
 }
+

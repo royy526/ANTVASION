@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -54,7 +55,12 @@ public class EnemySpawner : MonoBehaviour
 
         if (_enemiesAlive <= 0)
         {
-            AllEnemiesDefeated?.Invoke();
+            OnAllEnemiesDefeated();
         }
+    }
+
+    protected virtual void OnAllEnemiesDefeated()
+    {
+        AllEnemiesDefeated?.Invoke();
     }
 }

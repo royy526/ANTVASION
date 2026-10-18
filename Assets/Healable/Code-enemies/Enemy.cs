@@ -1,42 +1,43 @@
 using UnityEngine;
 
 
-[RequireComponent (typeof(Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class Enemy : MonoBehaviour
 {
-    public float health;
+    public float Health;
     public float MaxHealth = 6f;
-    public float damage = 10;
-    public float speed = .5f;
+    public float Damage = 10;
+    public float Speed = .5f;
+
     private bool _isDead;
 
     [SerializeField] private float _activationDelay = 0.75f;
 
-    protected Transform player;
-    protected EnemySpawner spawner;
-    protected Rigidbody2D rb;
+    protected Transform _player;
+    protected EnemySpawner _spawner;
+    protected Rigidbody2D _rigidBody;
 
     private float _activeTimer;
 
     protected virtual void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
+        _rigidBody = GetComponent<Rigidbody2D>();
     }
 
     protected virtual void Start()
     {
-        health = MaxHealth;
+        Health = MaxHealth;
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
 
         if (playerObject != null)
         {
-            player = playerObject.transform;
+            _player = playerObject.transform;
         }
     }
 
     protected virtual void FixedUpdate()
     {
-        if (player == null)
+        if (_player == null)
         {
             return;
         }
@@ -44,7 +45,7 @@ public class Enemy : MonoBehaviour
         if (_activeTimer < _activationDelay)
         {
             _activeTimer += Time.fixedDeltaTime;
-            rb.linearVelocity = Vector2.zero;
+            _rigidBody.linearVelocity = Vector2.zero;
             return;
         }
 
@@ -53,18 +54,21 @@ public class Enemy : MonoBehaviour
 
     protected virtual void FollowPlayer()
     {
-        Vector2 direction = ((Vector2)player.position - rb.position).normalized;
-        rb.linearVelocity = direction * speed;
+        Vector2 direction = ((Vector2)_player.position - _rigidBody.position).normalized;
+        _rigidBody.linearVelocity = direction * Speed;
     }
 
     public virtual void TakeDamage(float damageAmount)
     {
-        Debug.Log($"[{name}] recibe {damageAmount} de daño, vida antes={health}", this);
-        if (_isDead) return;
+        Debug.Log($"[{name}] recibe {damageAmount} de daño, vida antes={Health}", this);
+        if (_isDead)
+        {
+            return;
+        }
 
-        health -= damageAmount;
+        Health -= damageAmount;
 
-        if (health <= 0)
+        if (Health <= 0)
         {
             _isDead = true;
             Die();
@@ -73,14 +77,14 @@ public class Enemy : MonoBehaviour
 
     public void SetSpawner(EnemySpawner enemySpawner)
     {
-        spawner = enemySpawner;
+        _spawner = enemySpawner;
     }
 
     protected virtual void Die()
     {
-        if (spawner != null)
+        if (_spawner != null)
         {
-            spawner.EnemyDied();
+            _spawner.EnemyDied();
         }
 
         Destroy(gameObject);
@@ -88,3 +92,4 @@ public class Enemy : MonoBehaviour
 
 
 }
+
