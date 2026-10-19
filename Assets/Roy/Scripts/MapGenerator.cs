@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 using System.Collections.Generic;
 
 public class MapGenerator : MonoBehaviour
@@ -9,21 +10,21 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] private int _maxAttempts = 300;
     [SerializeField] private int _maxRegenerations = 20;
     [SerializeField] private Vector2Int _gridHalfSize = new Vector2Int(4, 4);
-    [SerializeField] [Range(0f, 1f)] private float _jumpChance = 0.15f;
+    [SerializeField] [Tooltip("Probabilidad de que despues de cada paso el recorrido salte a una sala ya existente al azar para continuar desde ella")] [Range(0f, 1f)] private float _jumpChance = 0.15f;
 
     [Header("Salas")]
-    [SerializeField] private GameObject normalRoomPrefab;
-    [SerializeField] private GameObject startRoomPrefab;
-    [SerializeField] private GameObject bossRoomPrefab;
-    [SerializeField] private GameObject treasureRoomPrefab;
-    [SerializeField] private GameObject shopRoomPrefab;
-    [SerializeField] private Vector2 roomWorldSize = new Vector2(20f, 11f);
+    [SerializeField] [FormerlySerializedAs("normalRoomPrefab")] private GameObject _normalRoomPrefab;
+    [SerializeField] [FormerlySerializedAs("startRoomPrefab")] private GameObject _startRoomPrefab;
+    [SerializeField] [FormerlySerializedAs("bossRoomPrefab")] private GameObject _bossRoomPrefab;
+    [SerializeField] [FormerlySerializedAs("treasureRoomPrefab")] private GameObject _treasureRoomPrefab;
+    [SerializeField] [FormerlySerializedAs("shopRoomPrefab")] private GameObject _shopRoomPrefab;
+    [SerializeField] [FormerlySerializedAs("roomWorldSize")] private Vector2 _roomWorldSize = new Vector2(20f, 11f);
 
-    private Dictionary<Vector2Int, RoomNode> rooms = new Dictionary<Vector2Int, RoomNode>();
+    private Dictionary<Vector2Int, RoomNode> _rooms = new Dictionary<Vector2Int, RoomNode>();
     public Dictionary<Vector2Int, Room> InstantiatedRooms {get; private set;} = new Dictionary<Vector2Int, Room>();
-    public Vector2 RoomWorldSize => roomWorldSize;
+    public Vector2 RoomWorldSize => _roomWorldSize;
 
-    private static readonly Vector2Int[] Directions = {Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right};
+    private static readonly Vector2Int[] _directions = {Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right};
 
     void Start()
     {
@@ -43,45 +44,40 @@ public class MapGenerator : MonoBehaviour
           regenerations++;
           GenerateLayout();  
         } 
-        while (rooms.Count < _minAcceptableRooms && regenerations < _maxRegenerations);
+        while (_rooms.Count < _minAcceptableRooms && regenerations < _maxRegenerations);
 
-        if (rooms.Count < _minAcceptableRooms)
+        if (_rooms.Count < _minAcceptableRooms)
         {
-            Debug.LogError($"No se logro generar un mapa valido despues de {_maxRegenerations} intentos, ultimo resultado: {rooms.Count} salas");
+            Debug.LogError($"No se logro generar un mapa valido despues de {_maxRegenerations} intentos, ultimo resultado: {_rooms.Count} salas");
         }
     }
 
     private void GenerateLayout()
     {
-        rooms.Clear();
+        _rooms.Clear();
 
         Vector2Int current = Vector2Int.zero;
-        var start = new RoomNode(current) {type = RoomType.Start};
-        rooms.Add(current, start);
+        RoomNode start = new RoomNode(current) { Type = RoomType.Start };
+        _rooms.Add(current, start);
         
         int attempts = 0;
 
-        while (rooms.Count < _targetRoomCount && attempts < _maxAttempts)
+        while (_rooms.Count < _targetRoomCount && attempts < _maxAttempts)
         {
             attempts++;
 
-            Vector2Int direction = Directions[Random.Range(0, Directions.Length)];
+            Vector2Int direction = _directions[Random.Range(0, _directions.Length)];
             Vector2Int next = current + direction;
 
-            if (!IsInsideGrid(next))
-            continue;
+            if (!IsInsideGrid(next)) { continue; }
 
-            if (rooms.ContainsKey(next))
-            {
-                current = next;
-            }
+            if (_rooms.ContainsKey(next)) { current = next; }
             else
             {
-                if (CountOccupiedNeighbours(next) > 1)
-                continue;
+                if (CountOccupiedNeighbours(next) > 1) { continue; }
 
-                var newRoom = new RoomNode(next);
-                rooms.Add(next, newRoom);
+                RoomNode newRoom = new RoomNode(next);
+                _rooms.Add(next, newRoom);
 
                 ConnectRooms(current, next);
 
@@ -90,32 +86,31 @@ public class MapGenerator : MonoBehaviour
 
             if (Random.value < _jumpChance)
             {
-                var keys = new List<Vector2Int>(rooms.Keys);
+                List<Vector2Int> keys = new List<Vector2Int>(_rooms.Keys);
                 current = keys[Random.Range(0, keys.Count)];
             }
         }
     }
 
-    private bool IsInsideGrid(Vector2Int pos)
+    private bool IsInsideGrid(Vector2Int position)
     {
-        return Mathf.Abs(pos.x) <= _gridHalfSize.x && Mathf.Abs(pos.y) <= _gridHalfSize.y;
+        return Mathf.Abs(position.x) <= _gridHalfSize.x && Mathf.Abs(position.y) <= _gridHalfSize.y;
     }
 
-    private int CountOccupiedNeighbours(Vector2Int pos)
+    private int CountOccupiedNeighbours(Vector2Int position)
     {
         int count = 0;
-        foreach (var dir in Directions)
+        foreach (Vector2Int direction in _directions)
         {
-            if (rooms.ContainsKey(pos + dir))
-            count++;
+            if (_rooms.ContainsKey(position + direction)) { count++; }
         }
         return count;
     }
 
     private void ConnectRooms(Vector2Int a, Vector2Int b)
     {
-        rooms[a].connections.Add(b-a);
-        rooms[b].connections.Add(a-b);
+        _rooms[a].Connections.Add(b - a);
+        _rooms[b].Connections.Add(a - b);
     }
 
     private void AssignSpecialRooms()
@@ -123,10 +118,9 @@ public class MapGenerator : MonoBehaviour
         Dictionary<Vector2Int, int> distances = ComputeDistanceFromStart();
 
         List<Vector2Int> leaves = new List<Vector2Int>();
-        foreach(var kv in rooms)
+        foreach(KeyValuePair<Vector2Int, RoomNode> entry in _rooms)
         {
-            if (kv.Value.type == RoomType.Normal && kv.Value.connections.Count == 1)
-            leaves.Add(kv.Key);
+            if (entry.Value.Type == RoomType.Normal && entry.Value.Connections.Count == 1) { leaves.Add(entry.Key); }
         }
 
         if (leaves.Count == 0)
@@ -137,38 +131,38 @@ public class MapGenerator : MonoBehaviour
 
         leaves.Sort((a, b) => distances[b].CompareTo(distances[a]));
 
-        Vector2Int bossPos = leaves[0];
-        rooms[bossPos].type = RoomType.Boss;
+        Vector2Int bossPosition = leaves[0];
+        _rooms[bossPosition].Type = RoomType.Boss;
         leaves.RemoveAt(0);
 
         if (leaves.Count > 0)
         {
             int index = Random.Range(0, leaves.Count);
-            rooms[leaves[index]].type = RoomType.Treasure;
+            _rooms[leaves[index]].Type = RoomType.Treasure;
             leaves.RemoveAt(index);
         }
 
         if (leaves.Count > 0)
         {
             int index = Random.Range(0, leaves.Count);
-            rooms[leaves[index]].type = RoomType.Shop;
+            _rooms[leaves[index]].Type = RoomType.Shop;
         }
     }
 
     private Dictionary<Vector2Int, int> ComputeDistanceFromStart()
     {
-        var distances = new Dictionary<Vector2Int, int>();
-        var queue = new Queue<Vector2Int>();
+        Dictionary<Vector2Int, int> distances = new Dictionary<Vector2Int, int>();
+        Queue<Vector2Int> queue = new Queue<Vector2Int>();
 
-        Vector2Int startPos = Vector2Int.zero;
-        distances[startPos] = 0;
-        queue.Enqueue(startPos);
+        Vector2Int startPosition = Vector2Int.zero;
+        distances[startPosition] = 0;
+        queue.Enqueue(startPosition);
 
         while (queue.Count > 0)
         {
             Vector2Int current = queue.Dequeue();
 
-            foreach(var direction in rooms[current].connections)
+            foreach(Vector2Int direction in _rooms[current].Connections)
             {
                 Vector2Int neighbor = current + direction;
 
@@ -186,62 +180,84 @@ public class MapGenerator : MonoBehaviour
     {
         bool isValid = true;
 
-        foreach(var kv in rooms)
+        isValid &= ValidateConnections();
+        isValid &= ValidateGridBounds();
+        isValid &= ValidateSpecialRoomsCounts();
+
+        if (isValid) { Debug.Log("[validateMap] mapa valido. todas las verificaciones pasaron"); }
+    }
+
+    private bool ValidateConnections()
+    {
+        bool isValid = true;
+
+        foreach (KeyValuePair<Vector2Int, RoomNode> entry in _rooms)
         {
-            Vector2Int pos = kv.Key;
-            RoomNode node = kv.Value;
+            Vector2Int position = entry.Key;
+            RoomNode node = entry.Value;
 
-            foreach(var direction in node.connections)
+            foreach (Vector2Int direction in node.Connections)
             {
-                Vector2Int neighborPos = pos + direction;
+                Vector2Int neighborPosition = position + direction;
 
-                if (!rooms.ContainsKey(neighborPos))
+                if (!_rooms.ContainsKey(neighborPosition))
                 {
-                    Debug.LogError($"[ValidateMap] la sala {pos} dice tener conexion hacia {neighborPos}, pero ahi no existe una sala");
+                    Debug.LogError($"[validateMap] la sala {position} tiene conexion hacia {neighborPosition} pero ahi no existe otra sala");
                     isValid = false;
                     continue;
                 }
 
                 Vector2Int oppositeDirection = -direction;
-                if(!rooms[neighborPos].connections.Contains(oppositeDirection))
+
+                if (!_rooms[neighborPosition].Connections.Contains(oppositeDirection))
                 {
-                    Debug.LogError($"[ValidateMap] conexion unilateral detectada: {pos} -> {neighborPos} existe, pero {neighborPos} -> {pos} no");
+                    Debug.LogError($"[validateMap] conexion unilateral: {position} -> {neighborPosition} existe pero al reves no existe");
                     isValid = false;
                 }
             }
         }
 
-        foreach(var pos in rooms.Keys)
+        return isValid;
+    }
+
+    private bool ValidateGridBounds()
+    {
+        bool isValid = true;
+
+        foreach (Vector2Int position in _rooms.Keys)
         {
-            if (!IsInsideGrid(pos))
-            {
-                Debug.LogError($"[ValidateMap] la sala {pos} quedo fuera del limite de la cuadricula");
-                isValid = false;
-            }
+            if (!IsInsideGrid(position)) { isValid = false; }
+
+            return isValid;
         }
+
+        return isValid;
+    }
+
+    private bool ValidateSpecialRoomsCounts()
+    {
+        bool isValid = true;
 
         isValid &= ValidateSingleType(RoomType.Start, exactlyOne: true);
-        isValid &= ValidateSingleType(RoomType.Boss, exactlyOne: false);
-        isValid &= ValidateSingleType(RoomType.Treasure, exactlyOne: false);
-        isValid &= ValidateSingleType(RoomType.Shop, exactlyOne: false);
+        isValid &= ValidateSingleType(RoomType.Boss, exactlyOne: true);
+        isValid &= ValidateSingleType(RoomType.Treasure, exactlyOne: true);
+        isValid &= ValidateSingleType(RoomType.Shop, exactlyOne: true);
 
-        if (isValid)
-        {
-            Debug.Log("[ValidateMap] mapa vlaido: todas las verificaciones pasaron");
-        }
+        return isValid;
     }
 
     private bool ValidateSingleType(RoomType type, bool exactlyOne)
     {
         int count = 0;
-        foreach(var node in rooms.Values)
+
+        foreach(RoomNode node in _rooms.Values)
         {
-            if (node.type == type)
+            if (node.Type == type)
             {
                 count++;
             }
 
-            if (exactlyOne && count !=1)
+            if (exactlyOne && count != 1)
             {
                 Debug.LogError($"[ValidateMap] se esperaba exactamente 1 sala del tipo {type}, pero hay {count}");
                 return false;
@@ -259,29 +275,29 @@ public class MapGenerator : MonoBehaviour
 
     private void InstantiateRooms()
     {
-        foreach(var node in rooms.Values)
+        foreach(RoomNode node in _rooms.Values)
         {
-            Vector3 worldPos = new Vector3(node.gridPos.x * roomWorldSize.x, node.gridPos.y * roomWorldSize.y, 0f);
+            Vector3 worldPosition = new Vector3(node.GridPosition.x * _roomWorldSize.x, node.GridPosition.y * _roomWorldSize.y, 0f);
 
-            GameObject prefab = GetPrefabForType(node.type);
-            GameObject instance = Instantiate(prefab, worldPos, Quaternion.identity, transform);
+            GameObject prefab = GetPrefabForType(node.Type);
+            GameObject instance = Instantiate(prefab, worldPosition, Quaternion.identity, transform);
 
             Room roomComponent = instance.GetComponent<Room>();
             
             if (roomComponent == null)
             {
-                Debug.LogError($"El prefab para {node.type} no tiene el componente Room, la sala en {node.gridPos} no tendra puertas");
+                Debug.LogError($"El prefab para {node.Type} no tiene el componente Room, la sala en {node.GridPosition} no tendra puertas");
                 continue;
             }
 
-            bool up = node.connections.Contains(Vector2Int.up);
-            bool down = node.connections.Contains(Vector2Int.down);
-            bool right = node.connections.Contains(Vector2Int.right);
-            bool left = node.connections.Contains(Vector2Int.left);
+            bool isConnectedUp = node.Connections.Contains(Vector2Int.up);
+            bool isConnectedDown = node.Connections.Contains(Vector2Int.down);
+            bool isConnectedRight = node.Connections.Contains(Vector2Int.right);
+            bool isConnectedLeft = node.Connections.Contains(Vector2Int.left);
 
-            roomComponent.Setup(node.type, node.gridPos, up, down, left, right);
+            roomComponent.Setup(node.Type, node.GridPosition, isConnectedUp, isConnectedDown, isConnectedLeft, isConnectedRight);
 
-            InstantiatedRooms[node.gridPos] = roomComponent;
+            InstantiatedRooms[node.GridPosition] = roomComponent;
         }
 
         Debug.Log($"[InstantiateRooms] termino. se crearon {transform.childCount} salas como hijas de MapGenerator");
@@ -291,11 +307,11 @@ public class MapGenerator : MonoBehaviour
     {
         switch(type)
         {
-            case RoomType.Start: return startRoomPrefab;
-            case RoomType.Boss: return bossRoomPrefab;
-            case RoomType.Treasure: return treasureRoomPrefab;
-            case RoomType.Shop: return shopRoomPrefab;
-            default: return normalRoomPrefab;
+            case RoomType.Start: return _startRoomPrefab;
+            case RoomType.Boss: return _bossRoomPrefab;
+            case RoomType.Treasure: return _treasureRoomPrefab;
+            case RoomType.Shop: return _shopRoomPrefab;
+            default: return _normalRoomPrefab;
         }
     }
 
@@ -303,11 +319,11 @@ public class MapGenerator : MonoBehaviour
     {
         Dictionary<Vector2Int, int> distances = ComputeDistanceFromStart();
 
-        foreach (var kv in rooms)
+        foreach (KeyValuePair<Vector2Int, RoomNode> entry in _rooms)
         {
-            RoomNode node = kv.Value;
-            int distance = distances.ContainsKey(node.gridPos) ? distances[node.gridPos] : -1;
-            Debug.Log($"Sala en  {node.gridPos} | tipo: {node.type} | Conexiones: {string.Join(", ", node.connections)} | Distancia: {distance}");
+            RoomNode node = entry.Value;
+            int distance = distances.ContainsKey(node.GridPosition) ? distances[node.GridPosition] : -1;
+            Debug.Log($"Sala en  {node.GridPosition} | tipo: {node.Type} | Conexiones: {string.Join(", ", node.Connections)} | Distancia: {distance}");
         }
     }
 }

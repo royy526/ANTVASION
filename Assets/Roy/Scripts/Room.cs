@@ -15,21 +15,12 @@ public class Room : MonoBehaviour
         RoomType = type;
         GridPos = gridPos;
 
-        if(_doorUp != null) 
-        {
-            _doorUp.SetActive(up);
-        }
-        if(_doorDown != null)
-        {
-            _doorDown.SetActive(down);
-        }
-        if(_doorLeft != null)
-        {
-            _doorLeft.SetActive(left);
-        }
-        if(_doorRight != null)
-        {
-            _doorRight.SetActive(right);
-        }
+        if(_doorUp != null) { _doorUp.SetActive(up); }
+
+        if(_doorDown != null) { _doorDown.SetActive(down); }
+
+        if(_doorLeft != null) { _doorLeft.SetActive(left); }
+
+        if(_doorRight != null) { _doorRight.SetActive(right); }
     }
 }
