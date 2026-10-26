@@ -1,63 +1,95 @@
 using UnityEngine;
 
+
+[RequireComponent(typeof(Rigidbody2D))]
 public class Enemy : MonoBehaviour
 {
-    public int health = 100;
-    public int damage = 10;
-    public float speed = 2f;
+    public float Health;
+    public float MaxHealth = 6f;
+    public float Damage = 10;
+    public float Speed = .5f;
 
-    protected Transform player;
-    protected EnemySpawner spawner;
+    private bool _isDead;
+
+    [SerializeField] private float _activationDelay = 0.75f;
+
+    protected Transform _player;
+    protected EnemySpawner _spawner;
+    protected Rigidbody2D _rigidBody;
+
+    private float _activeTimer;
+
+    protected virtual void Awake()
+    {
+        _rigidBody = GetComponent<Rigidbody2D>();
+    }
 
     protected virtual void Start()
     {
+        Health = MaxHealth;
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
 
-        if (playerObject != null) 
+        if (playerObject != null)
         {
-            player = playerObject.transform;
+            _player = playerObject.transform;
         }
     }
 
-    protected virtual void Update()
+    protected virtual void FixedUpdate()
     {
-        if (player != null)
+        if (_player == null)
         {
-            FollowPlayer();
+            return;
         }
+
+        if (_activeTimer < _activationDelay)
+        {
+            _activeTimer += Time.fixedDeltaTime;
+            _rigidBody.linearVelocity = Vector2.zero;
+            return;
+        }
+
+        FollowPlayer();
     }
 
     protected virtual void FollowPlayer()
     {
-        transform.position = Vector2.MoveTowards(
-            transform.position,
-            player.position,
-            speed * Time.deltaTime
-        );
+        Vector2 direction = ((Vector2)_player.position - _rigidBody.position).normalized;
+        _rigidBody.linearVelocity = direction * Speed;
     }
 
-    public virtual void TakeDamage(int damageAmount)
+    public virtual void TakeDamage(float damageAmount)
     {
-        health -= damageAmount;
-
-        if (health <= 0)
+        Debug.Log($"[{name}] recibe {damageAmount} de daño, vida antes={Health}", this);
+        if (_isDead)
         {
+            return;
+        }
+
+        Health -= damageAmount;
+
+        if (Health <= 0)
+        {
+            _isDead = true;
             Die();
         }
     }
 
     public void SetSpawner(EnemySpawner enemySpawner)
     {
-        spawner = enemySpawner;
+        _spawner = enemySpawner;
     }
 
     protected virtual void Die()
     {
-        if (spawner != null)
+        if (_spawner != null)
         {
-            spawner.EnemyDied();
+            _spawner.EnemyDied();
         }
 
         Destroy(gameObject);
     }
+
+
 }
+
