@@ -154,12 +154,12 @@ MonoBehaviour:
   _maxRegenerations: 20
   _gridHalfSize: {x: 4, y: 4}
   _jumpChance: 0.15
-  _normalRoomPrefab: {fileID: 971295285641946171, guid: 48c7fb637e8793d4b81aac5faae52e3d, type: 3}
+  _normalRoomPrefab: {fileID: 971295285641946171, guid: 626641805e8ff564f995d7cf55420c69, type: 3}
   _startRoomPrefab: {fileID: 971295285641946171, guid: a62da19a345781641b20ba045291c2ea, type: 3}
   _bossRoomPrefab: {fileID: 971295285641946171, guid: 0c90ffa18d1a02249a922165dc48f7cb, type: 3}
   _treasureRoomPrefab: {fileID: 971295285641946171, guid: 229de02aa8ed2204e9fbbceddda4f15f, type: 3}
   _shopRoomPrefab: {fileID: 971295285641946171, guid: 0d39d280837f83243bd4aad3445511fa, type: 3}
-  _roomWorldSize: {x: 4.9, y: 2.8}
+  _roomWorldSize: {x: 10, y: 10}
 --- !u!4 &442162344
 Transform:
   m_ObjectHideFlags: 0
@@ -208,10 +208,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7af570aa588447b46a4e0e50bae559eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
-  _enemyPrefabs: []
-  _minEnemies: 2
-  _maxEnemies: 4
-  _spawnPoints: []
 --- !u!1839735485 &629293610
 Tilemap:
   m_ObjectHideFlags: 0
@@ -420,6 +416,10 @@ PrefabInstance:
       propertyPath: m_Constraints
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 6380859602161900847, guid: cae00b357d4ccd8459aa8ce571eb2001, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 1269080859}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -637,7 +637,7 @@ MonoBehaviour:
   _onRoomCleared:
     m_PersistentCalls:
       m_Calls: []
-  _roomBounds: {fileID: 0}
+  _roomBounds: {fileID: -3949719995191167153, guid: 626641805e8ff564f995d7cf55420c69, type: 3}
 --- !u!4 &2057336958
 Transform:
   m_ObjectHideFlags: 0
