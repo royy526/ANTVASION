@@ -123,11 +123,7 @@ public class MapGenerator : MonoBehaviour
             if (entry.Value.Type == RoomType.Normal && entry.Value.Connections.Count == 1) { leaves.Add(entry.Key); }
         }
 
-        if (leaves.Count == 0)
-        {
-            Debug.LogWarning("No hay salas hoja disponibles y el mapa se quedada sin salas especiales");
-            return;
-        }
+        if (leaves.Count == 0) { return; }
 
         leaves.Sort((a, b) => distances[b].CompareTo(distances[a]));
 
@@ -183,8 +179,6 @@ public class MapGenerator : MonoBehaviour
         isValid &= ValidateConnections();
         isValid &= ValidateGridBounds();
         isValid &= ValidateSpecialRoomsCounts();
-
-        if (isValid) { Debug.Log("[validateMap] mapa valido. todas las verificaciones pasaron"); }
     }
 
     private bool ValidateConnections()
@@ -202,18 +196,13 @@ public class MapGenerator : MonoBehaviour
 
                 if (!_rooms.ContainsKey(neighborPosition))
                 {
-                    Debug.LogError($"[validateMap] la sala {position} tiene conexion hacia {neighborPosition} pero ahi no existe otra sala");
                     isValid = false;
                     continue;
                 }
 
                 Vector2Int oppositeDirection = -direction;
 
-                if (!_rooms[neighborPosition].Connections.Contains(oppositeDirection))
-                {
-                    Debug.LogError($"[validateMap] conexion unilateral: {position} -> {neighborPosition} existe pero al reves no existe");
-                    isValid = false;
-                }
+                if (!_rooms[neighborPosition].Connections.Contains(oppositeDirection)) { isValid = false; }
             }
         }
 
@@ -257,17 +246,9 @@ public class MapGenerator : MonoBehaviour
                 count++;
             }
 
-            if (exactlyOne && count != 1)
-            {
-                Debug.LogError($"[ValidateMap] se esperaba exactamente 1 sala del tipo {type}, pero hay {count}");
-                return false;
-            }
+            if (exactlyOne && count != 1) { return false; }
 
-            if (!exactlyOne && count > 1)
-            {
-                Debug.LogError($"[ValidateMap] no deberia de haber mas de 1 sala de tipo {type}, pero hay {count}");
-                return false;
-            }
+            if (!exactlyOne && count > 1) { return false; }
         }
 
         return true;
@@ -299,8 +280,6 @@ public class MapGenerator : MonoBehaviour
 
             InstantiatedRooms[node.GridPosition] = roomComponent;
         }
-
-        Debug.Log($"[InstantiateRooms] termino. se crearon {transform.childCount} salas como hijas de MapGenerator");
     }
 
     private GameObject GetPrefabForType(RoomType type)
@@ -323,7 +302,6 @@ public class MapGenerator : MonoBehaviour
         {
             RoomNode node = entry.Value;
             int distance = distances.ContainsKey(node.GridPosition) ? distances[node.GridPosition] : -1;
-            Debug.Log($"Sala en  {node.GridPosition} | tipo: {node.Type} | Conexiones: {string.Join(", ", node.Connections)} | Distancia: {distance}");
         }
     }
 }
