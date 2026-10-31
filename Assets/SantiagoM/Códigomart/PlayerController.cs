@@ -1,10 +1,17 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+<<<<<<< Updated upstream
 using UnityEngine.Rendering.Universal;
+=======
+using UnityEngine.EventSystems;
+using RangeAttribute = UnityEngine.RangeAttribute;
+>>>>>>> Stashed changes
 
 [RequireComponent(typeof(Rigidbody2D), typeof(PlayerStats))]
 public class PlayerController : MonoBehaviour
 {
+<<<<<<< Updated upstream
     [Header("Configuración del ataque")]
     public Transform Aim;
     public GameObject Bullet;
@@ -12,6 +19,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject melee;
     [SerializeField] private float attackDuration = 0.4f;
 
+=======
+    [Header("Estadísticas del player")]
+    public int PlayerHealth = 6;
+    private float playerSpeed = 5.0f;
+    [HideInInspector] [Range(0.50f, 2f)] public float SpeedStat = 1.0f;
+    public float PlayerPoison = 0f;
+    public float PlayerDamage = 3f;
+    public float AttackRange = 1.5f;
+    public float AttackCooldown = 2f;
+    public float PlayerLuck = 1f;
+    private Vector2 _playerMoves;
+    private Rigidbody2D _playerRigidBody2D;
+>>>>>>> Stashed changes
     public List<string> Inventory;
 
     private PlayerStats _stats;
@@ -37,6 +57,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+<<<<<<< Updated upstream
         ReadMovementInput();
         HandleAttacks();
         PlayerLook();
@@ -45,7 +66,26 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         _rb.linearVelocity = _moveInput * _stats.MoveSpeed.Value;
+=======
+  
     }
+    private void FixedUpdate()
+    {
+        PlayerMovement();
+    }
+
+    public void PlayerMovement()
+    {
+        float ActualPlayerSpeed = playerSpeed * SpeedStat;
+        float HorizontalMovement = Input.GetAxisRaw("Horizontal");
+        float VerticalMovement = Input.GetAxisRaw("Vertical");
+        Debug.Log(HorizontalMovement);
+        _playerMoves = new Vector2(HorizontalMovement * ActualPlayerSpeed, VerticalMovement * ActualPlayerSpeed);
+        _playerRigidBody2D.linearVelocity = _playerMoves;
+        _playerMoves.Normalize();
+>>>>>>> Stashed changes
+    }
+    
 
     private void ReadMovementInput()
     {

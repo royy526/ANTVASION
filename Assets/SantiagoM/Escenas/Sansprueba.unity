@@ -526,6 +526,7 @@ PrefabInstance:
       propertyPath: m_Constraints
       value: 4
       objectReference: {fileID: 0}
+<<<<<<< Updated upstream
     - target: {fileID: 6380859602161900847, guid: cae00b357d4ccd8459aa8ce571eb2001, type: 3}
       propertyPath: Bullet
       value: 
@@ -538,6 +539,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sprite
       objectReference: {fileID: 0}
+=======
+>>>>>>> Stashed changes
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
