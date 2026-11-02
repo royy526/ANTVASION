@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 
 public class BasicEnemy : Enemy
 {
@@ -11,3 +11,4 @@ public class BasicEnemy : Enemy
         speed = 2f;
     }
 }
+*/
