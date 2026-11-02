@@ -46,10 +46,7 @@ public class MapGenerator : MonoBehaviour
         } 
         while (_rooms.Count < _minAcceptableRooms && regenerations < _maxRegenerations);
 
-        if (_rooms.Count < _minAcceptableRooms)
-        {
-            Debug.LogError($"No se logro generar un mapa valido despues de {_maxRegenerations} intentos, ultimo resultado: {_rooms.Count} salas");
-        }
+        if (_rooms.Count < _minAcceptableRooms) { Debug.LogError($"No se logro generar un mapa valido despues de {_maxRegenerations} intentos, ultimo resultado: {_rooms.Count} salas"); }
     }
 
     private void GenerateLayout()
