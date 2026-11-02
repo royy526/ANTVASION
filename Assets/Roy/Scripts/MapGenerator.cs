@@ -46,10 +46,7 @@ public class MapGenerator : MonoBehaviour
         } 
         while (_rooms.Count < _minAcceptableRooms && regenerations < _maxRegenerations);
 
-        if (_rooms.Count < _minAcceptableRooms)
-        {
-            Debug.LogError($"No se logro generar un mapa valido despues de {_maxRegenerations} intentos, ultimo resultado: {_rooms.Count} salas");
-        }
+        if (_rooms.Count < _minAcceptableRooms) { Debug.LogError($"No se logro generar un mapa valido despues de {_maxRegenerations} intentos, ultimo resultado: {_rooms.Count} salas"); }
     }
 
     private void GenerateLayout()
@@ -216,8 +213,6 @@ public class MapGenerator : MonoBehaviour
         foreach (Vector2Int position in _rooms.Keys)
         {
             if (!IsInsideGrid(position)) { isValid = false; }
-
-            return isValid;
         }
 
         return isValid;
