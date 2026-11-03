@@ -154,12 +154,12 @@ MonoBehaviour:
   _maxRegenerations: 20
   _gridHalfSize: {x: 4, y: 4}
   _jumpChance: 0.15
-  normalRoomPrefab: {fileID: 971295285641946171, guid: 48c7fb637e8793d4b81aac5faae52e3d, type: 3}
-  startRoomPrefab: {fileID: 971295285641946171, guid: a62da19a345781641b20ba045291c2ea, type: 3}
-  bossRoomPrefab: {fileID: 971295285641946171, guid: 0c90ffa18d1a02249a922165dc48f7cb, type: 3}
-  treasureRoomPrefab: {fileID: 971295285641946171, guid: 229de02aa8ed2204e9fbbceddda4f15f, type: 3}
-  shopRoomPrefab: {fileID: 971295285641946171, guid: 0d39d280837f83243bd4aad3445511fa, type: 3}
-  roomWorldSize: {x: 4.9, y: 2.8}
+  _normalRoomPrefab: {fileID: 971295285641946171, guid: 626641805e8ff564f995d7cf55420c69, type: 3}
+  _startRoomPrefab: {fileID: 971295285641946171, guid: a62da19a345781641b20ba045291c2ea, type: 3}
+  _bossRoomPrefab: {fileID: 971295285641946171, guid: 0c90ffa18d1a02249a922165dc48f7cb, type: 3}
+  _treasureRoomPrefab: {fileID: 971295285641946171, guid: 229de02aa8ed2204e9fbbceddda4f15f, type: 3}
+  _shopRoomPrefab: {fileID: 971295285641946171, guid: 0d39d280837f83243bd4aad3445511fa, type: 3}
+  _roomWorldSize: {x: 10, y: 10}
 --- !u!4 &442162344
 Transform:
   m_ObjectHideFlags: 0
@@ -208,12 +208,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7af570aa588447b46a4e0e50bae559eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
-  player: {fileID: 1161459091}
-  enemyPrefabs:
-  - {fileID: 3453028248913739356, guid: 9e25fe6691f1e54409ffc785cb7ee673, type: 3}
-  minEnemies: 3
-  maxEnemies: 6
-  spawnDistance: 5
 --- !u!1839735485 &629293610
 Tilemap:
   m_ObjectHideFlags: 0
@@ -276,7 +270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d529c8e907047d99d0d4c59e747e711, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawnGrid
-  Bounds: {fileID: -784622733619969470, guid: 48c7fb637e8793d4b81aac5faae52e3d, type: 3}
+  _Bounds: {fileID: 0}
 --- !u!4 &629293615
 Transform:
   m_ObjectHideFlags: 0
@@ -346,29 +340,45 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 35787019073668151, guid: cae00b357d4ccd8459aa8ce571eb2001, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 35787019073668151, guid: cae00b357d4ccd8459aa8ce571eb2001, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 635477575302097002, guid: cae00b357d4ccd8459aa8ce571eb2001, type: 3}
       propertyPath: m_Name
       value: player
       objectReference: {fileID: 0}
+    - target: {fileID: 1550617966507418870, guid: cae00b357d4ccd8459aa8ce571eb2001, type: 3}
+      propertyPath: Aim
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1550617966507418870, guid: cae00b357d4ccd8459aa8ce571eb2001, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 1269080859}
     - target: {fileID: 1703650962286554659, guid: cae00b357d4ccd8459aa8ce571eb2001, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.70832
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 1703650962286554659, guid: cae00b357d4ccd8459aa8ce571eb2001, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.70832
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 1703650962286554659, guid: cae00b357d4ccd8459aa8ce571eb2001, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.70832
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 1703650962286554659, guid: cae00b357d4ccd8459aa8ce571eb2001, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.83582
+      value: 0.64
       objectReference: {fileID: 0}
     - target: {fileID: 1703650962286554659, guid: cae00b357d4ccd8459aa8ce571eb2001, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.070832
+      value: -0.04
       objectReference: {fileID: 0}
     - target: {fileID: 1703650962286554659, guid: cae00b357d4ccd8459aa8ce571eb2001, type: 3}
       propertyPath: m_LocalPosition.z
@@ -406,16 +416,18 @@ PrefabInstance:
       propertyPath: m_Constraints
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 6380859602161900847, guid: cae00b357d4ccd8459aa8ce571eb2001, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 1269080859}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 783880518326764972, guid: cae00b357d4ccd8459aa8ce571eb2001, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1650854885}
   m_SourcePrefab: {fileID: 100100000, guid: cae00b357d4ccd8459aa8ce571eb2001, type: 3}
---- !u!4 &1161459091 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1703650962286554659, guid: cae00b357d4ccd8459aa8ce571eb2001, type: 3}
-  m_PrefabInstance: {fileID: 1161459090}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1269080857
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,6 +439,7 @@ GameObject:
   - component: {fileID: 1269080860}
   - component: {fileID: 1269080859}
   - component: {fileID: 1269080858}
+  - component: {fileID: 1269080861}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -508,6 +521,82 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1269080861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1269080857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalCameraData
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
+--- !u!1 &1650854880 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 783880518326764972, guid: cae00b357d4ccd8459aa8ce571eb2001, type: 3}
+  m_PrefabInstance: {fileID: 1161459090}
+  m_PrefabAsset: {fileID: 0}
+--- !u!50 &1650854885
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1650854880}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &2057336955
 GameObject:
   m_ObjectHideFlags: 0
@@ -537,19 +626,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dbf541a2a7f49ec92ed54004e771246, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyRoomEncounter
-  enemiesToSpawn: 6
-  player: {fileID: 1161459091}
-  enemyPrefabs:
-  - {fileID: 3453028248913739356, guid: 9e25fe6691f1e54409ffc785cb7ee673, type: 3}
-  cellSize: 1
-  obstacleMask:
+  _enemiesToSpawn: 3
+  _player: {fileID: 0}
+  _enemyPrefabs: []
+  _cellSize: 0.5
+  _obstacleMask:
     serializedVersion: 2
     m_Bits: 0
-  createPrototypeBarriers: 1
-  onRoomCleared:
+  _canCreatePrototypeBarriers: 1
+  _onRoomCleared:
     m_PersistentCalls:
       m_Calls: []
-  roomBounds: {fileID: -784622733619969470, guid: 48c7fb637e8793d4b81aac5faae52e3d, type: 3}
+  _roomBounds: {fileID: -3949719995191167153, guid: 626641805e8ff564f995d7cf55420c69, type: 3}
 --- !u!4 &2057336958
 Transform:
   m_ObjectHideFlags: 0
