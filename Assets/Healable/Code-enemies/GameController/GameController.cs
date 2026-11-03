@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.UI;
+using TMPro;
 public class GameController : MonoBehaviour
 {
     public static GameController instance;
@@ -26,7 +27,7 @@ public class GameController : MonoBehaviour
     public static float BulletSize { get => _bulletSize; set => _bulletSize = value; }
 
 
-    private static Text HealthText;
+    [SerializeField] private TextMeshProUGUI HealthText;
     private void Awake()
     {
         if (instance == null) { instance = this; }
@@ -38,7 +39,7 @@ public class GameController : MonoBehaviour
     }
 
 
-    public void DamagePlayer(int Damage)
+    public static void DamagePlayer(int Damage)
     {
         _health -= Damage;
 
