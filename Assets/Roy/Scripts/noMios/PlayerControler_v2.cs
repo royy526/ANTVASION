@@ -5,6 +5,8 @@ using UnityEngine.Rendering.Universal;
 [RequireComponent(typeof(Rigidbody2D), typeof(PlayerStats_v2))]
 public class PlayerControler_v2 : MonoBehaviour
 {
+    [SerializeField] private Animator _animator;
+
     [Header("Configuración del ataque")]
     public Transform Aim;
     public GameObject Bullet;
@@ -28,6 +30,7 @@ public class PlayerControler_v2 : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _stats = GetComponent<PlayerStats_v2>();
+        _animator.SetBool("IsWalking", false);
 
         if (_melee != null) { _meleeDamage = _melee.GetComponent<DamageDealer_v2>(); }
     }
@@ -49,6 +52,9 @@ public class PlayerControler_v2 : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         _moveInput = new Vector2(horizontal, vertical).normalized;
+
+        if (horizontal != 0 || vertical != 0) { _animator.SetBool("IsWalking", true); }
+        else { _animator.SetBool("IsWalking", false); }
     }
 
     private void HandleAttacks()
@@ -73,6 +79,7 @@ public class PlayerControler_v2 : MonoBehaviour
         _isAttacking = true;
         _attackTimer = 0f;
         _meleeCooldownTimer = _stats.MeleeCooldown.Value;
+        _animator.SetBool("IsAttacking", true);
     }
 
     private void UpdateMeleeDuration()
@@ -85,6 +92,7 @@ public class PlayerControler_v2 : MonoBehaviour
         {
             _isAttacking = false;
             _melee.SetActive(false);
+            _animator.SetBool("IsAttacking", false);
         }
     }
 
