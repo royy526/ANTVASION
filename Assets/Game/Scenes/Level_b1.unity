@@ -131,7 +131,6 @@ GameObject:
   - component: {fileID: 100704507}
   - component: {fileID: 100704506}
   - component: {fileID: 100704509}
-  - component: {fileID: 100704510}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -257,26 +256,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!114 &100704510
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 100704505}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dac0750e21d323648b84768a4f93bbbf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::cameraMovement
-  target: {fileID: 1537727277}
-  smoothSpeed: 0.15
-  offset: {x: 0, y: 0, z: 0}
-  minX: -10
-  maxX: 10
-  minY: -10
-  maxY: 10
-  cam: {fileID: 100704507}
 --- !u!1 &1537727262 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 783880518326764972, guid: cae00b357d4ccd8459aa8ce571eb2001, type: 3}
@@ -355,11 +334,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.53, y: 0.56}
   m_EdgeRadius: 0
---- !u!4 &1537727277 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 177000745133005087, guid: cae00b357d4ccd8459aa8ce571eb2001, type: 3}
-  m_PrefabInstance: {fileID: 1443118717854767581}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1936335790
 GameObject:
   m_ObjectHideFlags: 0
@@ -540,7 +514,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8586449810935551414, guid: cae00b357d4ccd8459aa8ce571eb2001, type: 3}
+    - {fileID: 7411093048628467702, guid: cae00b357d4ccd8459aa8ce571eb2001, type: 3}
+    - {fileID: 6380859602161900847, guid: cae00b357d4ccd8459aa8ce571eb2001, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
