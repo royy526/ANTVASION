@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
+
 public class GameController : MonoBehaviour
 {
     public static GameController instance;
 
-    private static float _health = 10;
+    GameObject Player;
+
+    private static float _health = 6;
 
     private static int _maxHealth = 10;
 
@@ -31,6 +35,13 @@ public class GameController : MonoBehaviour
     private void Awake()
     {
         if (instance == null) { instance = this; }
+        Player = GameObject.FindGameObjectWithTag("Player");
+    }
+
+    private void Start()
+    {
+        HealthText.text = "Vida: " + _health;
+        _health = 6;
     }
 
     private void Update()
@@ -39,11 +50,11 @@ public class GameController : MonoBehaviour
     }
 
 
-    public static void DamagePlayer(int Damage)
+    public static void DamagePlayer(int Damage, GameObject Player)
     {
         _health -= Damage;
 
-        if (_health <= 0) { KillPlayer(); }
+        if (_health <= 0) { KillPlayer(Player); }
     }
 
     public static void HealPlayer(float HealAmount)
@@ -65,9 +76,18 @@ public class GameController : MonoBehaviour
         MoveSpeed += Speed;
     }
 
-    public static void KillPlayer()
+    public static void KillPlayer(GameObject Player)
     {
+        Destroy(Player);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 
+    public static void OnTriggerEnter2D(Collider2D Collition, GameObject Player)
+    {
+        if (Collition.gameObject.CompareTag("Enemy"))
+        {
+            DamagePlayer(1, Player);
+        }
     }
 
 }

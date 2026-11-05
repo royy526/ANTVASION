@@ -7,23 +7,36 @@ public enum EnemyState
     Wander, Follow, Die, Attack
 };
 
+public enum EnemyType
+{
+    Melee,
+    Ranged
+};
+
+
 public class EnemyController_v2 : MonoBehaviour
 {
     GameObject Player;
     public EnemyState CurrentState = EnemyState.Wander;
+    public EnemyType EnemyType;
     public float Range;
     public float Speed;
     public float AttackRange;
     public float CoolDown;
+
+    Rigidbody2D RigidBody;
 
     private bool _chosenDirection = false;
     private bool _isDead = false;
     private bool _isCoolDownAttack = false;
     private Vector2 _randomDirection;
 
+    public float _health = 2f;
+
     void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
+        RigidBody = GetComponent<Rigidbody2D>();
     }
 
     void Update()
@@ -58,6 +71,8 @@ public class EnemyController_v2 : MonoBehaviour
         {
             CurrentState = EnemyState.Attack;
         }
+
+        
     }
 
     private bool IsPlayerInRange(float Range)
@@ -82,7 +97,8 @@ public class EnemyController_v2 : MonoBehaviour
             StartCoroutine(ChooseDirection());
         }
 
-        transform.position += -transform.right * Speed * Time.deltaTime;
+        Vector2 newPosition = RigidBody.position + _randomDirection * Time.fixedDeltaTime;
+        RigidBody.MovePosition(newPosition);
         if (IsPlayerInRange(Range))
         {
             CurrentState = EnemyState.Follow;
@@ -98,8 +114,18 @@ public class EnemyController_v2 : MonoBehaviour
     {
         if (!_isCoolDownAttack)
         {
-            GameController.DamagePlayer(1);
-            StartCoroutine(Cooldown());
+            switch (EnemyType)
+            {
+                case (EnemyType.Melee):
+                    GameController.DamagePlayer(1, Player);
+                    StartCoroutine(Cooldown());
+                    break;
+                case (EnemyType.Ranged):
+                    //GameObject Bullet = Instantiate(BulletPrefab, transform.position, Quaternion.identity) as GameObject;
+                    //Bullet.GetComponent<BulletController>().GetPlayer(Player.transform);
+
+                    break;
+            }
         }
     }
 
@@ -113,5 +139,24 @@ public class EnemyController_v2 : MonoBehaviour
     public void Death()
     {
         Destroy(gameObject);
+    }
+
+    public void ReceivedDamage(Collider2D Collition)
+    {
+
+
+        if (Collition.gameObject.CompareTag("bullet") || Collition.gameObject.CompareTag("Melee"))
+        {
+            _health -= 1;
+            if (_health == 0)
+            {
+                Death();
+            }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D Collition)
+    {
+        ReceivedDamage(Collition);
     }
 }
