@@ -1,4 +1,6 @@
+using JetBrains.Annotations;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,17 +11,17 @@ public class EnemyRoomEncounter : MonoBehaviour
 
 {
     [Header("Encounter")]
-    [SerializeField, Min(1)] private int enemiesToSpawn = 3;
-    [SerializeField] private Transform player;
-    [SerializeField] private GameObject[] enemyPrefabs;
+    [SerializeField, Min(1)] private int _enemiesToSpawn = 3;
+    [SerializeField] private Transform _player;
+    [SerializeField] private GameObject[] _enemyPrefabs;
 
     [Header("Grid")]
-    [SerializeField, Min(0.25f)] private float cellSize = 0.5f;
-    [SerializeField] private LayerMask obstacleMask;
+    [SerializeField, Min(0.25f)] private float _cellSize = 0.5f;
+    [SerializeField] private LayerMask _obstacleMask;
 
     [Header("Room barriers")]
-    [SerializeField] private bool createPrototypeBarriers = true;
-    [SerializeField] private UnityEvent onRoomCleared;
+    [SerializeField] private bool _canCreatePrototypeBarriers = true;
+    [SerializeField] private UnityEvent _onRoomCleared;
 
     private readonly List<RoomEnemy> aliveEnemies = new();
     private readonly List<GameObject> barriers = new();
@@ -27,8 +29,9 @@ public class EnemyRoomEncounter : MonoBehaviour
     private bool encounterStarted;
     private bool roomCleared;
 
-    public int EnemiesAlive => aliveEnemies.Count;
-    public bool RoomCleared => roomCleared;
+    public int EnemiesAlive => _aliveEnemies.Count;
+    public bool RoomCleared => _isRoomCleared;
+
 
     private void Awake()
     {
@@ -40,32 +43,40 @@ public class EnemyRoomEncounter : MonoBehaviour
 
     private void Update()
     {
-        if (encounterStarted || player == null)
+        if (_hasEncounterStarted || _player == null)
+        {
             return;
+        }
 
-        if (roomBounds.bounds.Contains(player.position))
+        if (_roomBounds.bounds.Contains(_player.position))
+        {
             StartEncounter();
+        }
     }
 
     public void StartEncounter()
     {
-        if (encounterStarted)
+        if (_hasEncounterStarted)
+        {
             return;
+        }
 
         FindPlayer();
-        if (player == null)
+        if (_player == null)
         {
             Debug.LogWarning("Enemy room needs a GameObject tagged Player.", this);
             return;
         }
 
-        encounterStarted = true;
+        _hasEncounterStarted = true;
         SetBarriers(true);
-        for (int i = 0; i < enemiesToSpawn; i++)
+        for (int i = 0; i < _enemiesToSpawn; i++)
             SpawnEnemy();
 
-        if (aliveEnemies.Count == 0)
+        if (_aliveEnemies.Count == 0)
+        {
             CompleteRoom();
+        }
     }
 
     private void SpawnEnemy()
@@ -74,62 +85,77 @@ public class EnemyRoomEncounter : MonoBehaviour
         
         if (enemyPrefabs != null && enemyPrefabs.Length > 0)
         {
-            GameObject selectedPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
+            GameObject selectedPrefab = _enemyPrefabs[Random.Range(0, _enemyPrefabs.Length)];
             if (selectedPrefab == null)
+            {
                 return;
         }
-
-
-
-
-
-
     }
 
 
     private void HandleEnemyDied(RoomEnemy enemy)
     {
         enemy.Died -= HandleEnemyDied;
-        aliveEnemies.Remove(enemy);
-        if (aliveEnemies.Count == 0)
+        _aliveEnemies.Remove(enemy);
+        if (_aliveEnemies.Count == 0)
+        {
             CompleteRoom();
+        }
     }
 
     private void CompleteRoom()
     {
-        if (roomCleared)
+        if (_isRoomCleared)
+        {
             return;
+        }
 
-        roomCleared = true;
+        _isRoomCleared = true;
         SetBarriers(false);
-        onRoomCleared?.Invoke();
+        _onRoomCleared?.Invoke();
     }
 
     private void FindPlayer()
     {
-        if (player != null)
+        if (_player != null)
+        {
             return;
+        }
 
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
         if (playerObject != null)
-            player = playerObject.transform;
+        {
+            _player = playerObject.transform;
+        }
     }
 
-    private void EnsurePlayerPhysics()
+    private void EnsurePlayerRigidbody()
     {
-        if (player == null)
+        if (_player == null)
+        {
             return;
+        }
 
-        Rigidbody2D playerBody = player.GetComponent<Rigidbody2D>();
+        Rigidbody2D playerBody = _player.GetComponent<Rigidbody2D>();
         if (playerBody == null)
         {
-            playerBody = player.gameObject.AddComponent<Rigidbody2D>();
+            playerBody = _player.gameObject.AddComponent<Rigidbody2D>();
             playerBody.gravityScale = 0f;
             playerBody.freezeRotation = true;
         }
+    }
 
-        if (player.GetComponent<Collider2D>() == null)
-            player.gameObject.AddComponent<BoxCollider2D>();
+    private void EnsurePlayerCollider()
+    {
+        if (_player == null)
+        {
+            return;
+        }
+
+        if (_player.GetComponent<Collider2D>() == null)
+        {
+            _player.gameObject.AddComponent<BoxCollider2D>();
+        }
     }
 
 
@@ -137,7 +163,7 @@ public class EnemyRoomEncounter : MonoBehaviour
 
     private void SetBarriers(bool closed)
     {
-        foreach (GameObject barrier in barriers)
+        foreach (GameObject barrier in _barriers)
             barrier.SetActive(closed);
     }
 }
