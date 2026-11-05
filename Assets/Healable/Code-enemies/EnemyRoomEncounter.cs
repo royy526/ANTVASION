@@ -24,7 +24,6 @@ public class EnemyRoomEncounter : MonoBehaviour
     private readonly List<RoomEnemy> aliveEnemies = new();
     private readonly List<GameObject> barriers = new();
     [SerializeField] private BoxCollider2D roomBounds;
-    private EnemySpawnGrid spawnGrid;
     private bool encounterStarted;
     private bool roomCleared;
 
@@ -35,10 +34,6 @@ public class EnemyRoomEncounter : MonoBehaviour
     {
         FindPlayer();
         EnsurePlayerPhysics();
-        CreateGrid();
-
-        if (createPrototypeBarriers)
-            CreatePrototypeBarriers();
 
         SetBarriers(false);
     }
@@ -75,19 +70,13 @@ public class EnemyRoomEncounter : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        if (!spawnGrid.TryGetRandomFreeCell(out Vector2 spawnPosition))
-        {
-            Debug.LogWarning("There is no free grid cell for another enemy.", this);
-            return;
-        }
 
-        GameObject enemyObject;
+        
         if (enemyPrefabs != null && enemyPrefabs.Length > 0)
         {
             GameObject selectedPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
             if (selectedPrefab == null)
                 return;
-            enemyObject = Instantiate(selectedPrefab, spawnPosition, Quaternion.identity, transform);
         }
 
 
@@ -143,43 +132,8 @@ public class EnemyRoomEncounter : MonoBehaviour
             player.gameObject.AddComponent<BoxCollider2D>();
     }
 
-    private void CreateGrid()
-    {
-        GameObject gridObject = new GameObject("Enemy Spawn Grid", typeof(Grid), typeof(EnemySpawnGrid));
-        gridObject.transform.SetParent(transform, false);
-        spawnGrid = gridObject.GetComponent<EnemySpawnGrid>();
-        spawnGrid.Configure(roomBounds.bounds, cellSize, obstacleMask);
-    }
 
-    private void CreatePrototypeBarriers()
-    {
-        Bounds bounds = roomBounds.bounds;
-        CreateBarrier("North Barrier", new Vector2(bounds.center.x, bounds.max.y), new Vector2(bounds.size.x, 0.35f));
-        CreateBarrier("South Barrier", new Vector2(bounds.center.x, bounds.min.y), new Vector2(bounds.size.x, 0.35f));
-        CreateBarrier("East Barrier", new Vector2(bounds.max.x, bounds.center.y), new Vector2(0.35f, bounds.size.y));
-        CreateBarrier("West Barrier", new Vector2(bounds.min.x, bounds.center.y), new Vector2(0.35f, bounds.size.y));
-    }
 
-    private void CreateBarrier(string barrierName, Vector2 position, Vector2 size)
-    {
-        GameObject barrier = new GameObject(barrierName);
-        barrier.transform.SetParent(transform);
-        barrier.transform.position = position;
-
-        SpriteRenderer renderer = barrier.AddComponent<SpriteRenderer>();
-        renderer.sprite = CreateSquareSprite();
-        renderer.color = new Color(0.2f, 0.85f, 1f, 0.8f);
-        barrier.transform.localScale = new Vector3(size.x, size.y, 1f);
-
-        BoxCollider2D collider = barrier.AddComponent<BoxCollider2D>();
-        collider.size = Vector2.one;
-        barriers.Add(barrier);
-    }
-
-    private static Sprite CreateSquareSprite()
-    {
-        return Sprite.Create(Texture2D.whiteTexture, new Rect(0f, 0f, 1f, 1f), new Vector2(0.5f, 0.5f), 1f);
-    }
 
     private void SetBarriers(bool closed)
     {

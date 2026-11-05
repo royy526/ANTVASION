@@ -1106,7 +1106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner_v2
   _enemyPrefabs:
-  - {fileID: -5176809554569944850, guid: 05cf2a2a0bf4ff543bbd40f67a6ac97d, type: 3}
+  - {fileID: 0}
   _minEnemies: 2
   _maxEnemies: 4
   _spawnPoints:

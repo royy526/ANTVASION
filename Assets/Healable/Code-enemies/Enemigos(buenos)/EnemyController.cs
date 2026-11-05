@@ -11,12 +11,19 @@ public enum EnemyState
 
 };
 
+public enum EnemyType
+{
+    Melee,
+    Ranged
+};
+
 public class EnemyController : MonoBehaviour
 {
 
     GameObject Player;
 
     public EnemyState CurrentState = EnemyState.Wander;
+    public EnemyType EnemyType;
 
     public float Range;
     public float Speed;
@@ -31,6 +38,8 @@ public class EnemyController : MonoBehaviour
     private bool _isCoolDownAttack = false;
 
     private Vector2 _randomDirection;
+
+    public GameObject BulletPrefab;
 
 
     void Start()
@@ -110,8 +119,16 @@ public class EnemyController : MonoBehaviour
     {
         if (!_isCoolDownAttack)
         {
-            GameController.DamagePlayer(1);
-            StartCoroutine(Cooldown());
+            switch (EnemyType)
+            {
+                case (EnemyType.Melee):
+                    GameController.DamagePlayer(1);
+                    StartCoroutine(Cooldown());
+                    break;
+                case (EnemyType.Ranged):
+                    GameObject Bullet = Instantiate(BulletPrefab, transform.position, Quaternion.identity) as GameObject;
+                    break;
+            }
         }
     }
 

@@ -358,7 +358,7 @@ MonoBehaviour:
   Range: 12
   Speed: 0.5
   AttackRange: 2
-  coolDown: 5
+  coolDown: 2
 --- !u!212 &630893374
 SpriteRenderer:
   serializedVersion: 3
