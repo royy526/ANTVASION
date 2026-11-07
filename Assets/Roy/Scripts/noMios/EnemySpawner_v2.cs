@@ -16,17 +16,12 @@ public class EnemySpawner_v2 : MonoBehaviour
 
     public event Action AllEnemiesDefeated;
 
-
     public bool Spawn()
     {
-        if (_enemyPrefabs.Count == 0 || _spawnPoints.Length == 0)
-        {
-            return false;
-        }
+        if (_enemyPrefabs.Count == 0 || _spawnPoints.Length == 0) { return false; }
 
         int count = UnityEngine.Random.Range(_minEnemies, _maxEnemies + 1);
         count = Mathf.Min(count, _spawnPoints.Length);
-
 
         List<Transform> points = new List<Transform>(_spawnPoints);
         for (int i = points.Count - 1; i > 0; i--)
@@ -52,10 +47,7 @@ public class EnemySpawner_v2 : MonoBehaviour
     {
         _enemiesAlive--;
 
-        if (_enemiesAlive <= 0)
-        {
-            OnAllEnemiesDefeated();
-        }
+        if (_enemiesAlive <= 0) { OnAllEnemiesDefeated(); }
     }
 
     protected virtual void OnAllEnemiesDefeated()

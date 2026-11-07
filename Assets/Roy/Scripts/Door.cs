@@ -18,7 +18,7 @@ public class Door : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.CompareTag("Player")) return;
+        if (!other.CompareTag("Player")) { return; }
 
         RoomTransitionManager.Instance.OnPlayerCrossedDoor(_ownerRoom, _direction);
     }

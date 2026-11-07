@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 
-public enum ModifierType {Flat, Percent}
+public enum ModifierType { Flat, Percent }
 
 public class StatModifier
 {
@@ -34,8 +34,8 @@ public class Stat
 
             foreach (StatModifier m in _modifiers)
             {
-                if (m.Type == ModifierType.Flat) flat += m.Value;
-                else percent += m.Value;
+                if (m.Type == ModifierType.Flat) { flat += m.Value; }
+                else { percent += m.Value; }
             }
 
             return Mathf.Max(0f, (BaseValue + flat) * (1f + percent));

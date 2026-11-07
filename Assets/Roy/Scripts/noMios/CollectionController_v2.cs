@@ -14,13 +14,9 @@ public class Item
 public class CollectionController_v2 : MonoBehaviour
 {
     public Item Item;
-
     public float HealthChange;
-
     public float MoveSpeedChange;
-
     public float AttackSpeedChange;
-
     public float BulletSizeChange;
 
     private void Start()
@@ -30,15 +26,10 @@ public class CollectionController_v2 : MonoBehaviour
         gameObject.AddComponent<PolygonCollider2D>();
     }
 
-
-
-
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
         {
-            //PlayerController.collectedAmount++;
             GameController.HealPlayer(HealthChange);
             GameController.MoveSpeedChange(MoveSpeedChange);
             GameController.FireRateChange(AttackSpeedChange);

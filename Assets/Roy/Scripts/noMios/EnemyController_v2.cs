@@ -2,16 +2,9 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public enum EnemyState
-{
-    Wander, Follow, Die, Attack
-};
+public enum EnemyState { Wander, Follow, Die, Attack };
 
-public enum EnemyType
-{
-    Melee,
-    Ranged
-};
+public enum EnemyType { Melee, Ranged };
 
 
 public class EnemyController_v2 : MonoBehaviour
@@ -53,26 +46,15 @@ public class EnemyController_v2 : MonoBehaviour
                 Death();
             break;
             case (EnemyState.Attack):
-            Attack();
+                Attack();
             break;
         }
 
-        if (IsPlayerInRange(Range) && CurrentState != EnemyState.Die)
-        {
-            CurrentState = EnemyState.Follow;
-        }
-        else if(IsPlayerInRange(Range) && CurrentState != EnemyState.Die)
-        {
-            CurrentState=EnemyState.Wander;
-        }
+        if (IsPlayerInRange(Range) && CurrentState != EnemyState.Die) { CurrentState = EnemyState.Follow; }
+        else if(IsPlayerInRange(Range) && CurrentState != EnemyState.Die) { CurrentState=EnemyState.Wander; }
 
 
-        if(Vector2.Distance(transform.position, Player.transform.position) <= AttackRange)
-        {
-            CurrentState = EnemyState.Attack;
-        }
-
-        
+        if(Vector2.Distance(transform.position, Player.transform.position) <= AttackRange) { CurrentState = EnemyState.Attack; }
     }
 
     private bool IsPlayerInRange(float Range)
@@ -86,23 +68,16 @@ public class EnemyController_v2 : MonoBehaviour
         yield return new WaitForSeconds(Random.Range(2f, 8f));
         _randomDirection = new Vector2(0, Random.Range(0, 360));
         Quaternion nextRotation = Quaternion.Euler(_randomDirection );
-        //transform.rotation = Quaternion.Lerp(transform.rotation, nextRotation, Random.Range(0.5f, 2.5f));
         _chosenDirection = false;
     }
     
     void Wander()
     {
-        if (!_chosenDirection)
-        {
-            StartCoroutine(ChooseDirection());
-        }
+        if (!_chosenDirection) { StartCoroutine(ChooseDirection()); }
 
         Vector2 newPosition = RigidBody.position + _randomDirection * Time.fixedDeltaTime;
         RigidBody.MovePosition(newPosition);
-        if (IsPlayerInRange(Range))
-        {
-            CurrentState = EnemyState.Follow;
-        }
+        if (IsPlayerInRange(Range)) { CurrentState = EnemyState.Follow; }
     }
 
     void Follow()
@@ -123,8 +98,7 @@ public class EnemyController_v2 : MonoBehaviour
                 case (EnemyType.Ranged):
                     //GameObject Bullet = Instantiate(BulletPrefab, transform.position, Quaternion.identity) as GameObject;
                     //Bullet.GetComponent<BulletController>().GetPlayer(Player.transform);
-
-                    break;
+                break;
             }
         }
     }
@@ -148,10 +122,7 @@ public class EnemyController_v2 : MonoBehaviour
         if (Collition.gameObject.CompareTag("bullet") || Collition.gameObject.CompareTag("Melee"))
         {
             _health -= 1;
-            if (_health == 0)
-            {
-                Death();
-            }
+            if (_health == 0) { Death(); }
         }
     }
 

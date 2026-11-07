@@ -12,7 +12,7 @@ public class DamageDealer_v2 : MonoBehaviour
         Enemy_v2 enemy = other.GetComponentInParent<Enemy_v2>();
         if (enemy == null) { return; }
 
-        Debug.Log($"[DamageDealer] {Damage} de da�o a {enemy.name}", this);
+        Debug.Log($"[DamageDealer] {Damage} de daño a {enemy.name}", this);
         enemy.TakeDamage(Damage);
 
         if (_destroyOnHit) { Destroy(gameObject); }

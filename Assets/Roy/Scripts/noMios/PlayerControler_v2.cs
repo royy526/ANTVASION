@@ -98,7 +98,7 @@ public class PlayerControler_v2 : MonoBehaviour
 
     private void Shoot()
     {
-        if (_shootCooldownTimer > 0f) return;
+        if (_shootCooldownTimer > 0f) { return; }
 
         _shootCooldownTimer = _stats.ShootCooldown.Value;
 

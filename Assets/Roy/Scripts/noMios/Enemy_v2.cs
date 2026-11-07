@@ -28,18 +28,12 @@ public class Enemy_v2 : MonoBehaviour
         Health = MaxHealth;
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
 
-        if (playerObject != null)
-        {
-            _player = playerObject.transform;
-        }
+        if (playerObject != null) { _player = playerObject.transform; }
     }
 
     protected virtual void FixedUpdate()
     {
-        if (_player == null)
-        {
-            return;
-        }
+        if (_player == null) { return; }
 
         if (_activeTimer < _activationDelay)
         {
@@ -59,15 +53,12 @@ public class Enemy_v2 : MonoBehaviour
 
     public virtual void TakeDamage(float damageAmount)
     {
-        Debug.Log($"[{name}] recibe {damageAmount} de da�o, vida antes={Health}", this);
-        if (_isDead)
-        {
-            return;
-        }
+        Debug.Log($"[{name}] recibe {damageAmount} de daño, vida antes={Health}", this);
+        if (_isDead) { return; }
 
         Health -= damageAmount;
 
-        if (Health <= 0)
+        if (Health <= 0) 
         {
             _isDead = true;
             Die();
@@ -81,10 +72,7 @@ public class Enemy_v2 : MonoBehaviour
 
     protected virtual void Die()
     {
-        if (_spawner != null)
-        {
-            _spawner.EnemyDied();
-        }
+        if (_spawner != null)  { _spawner.EnemyDied(); }
 
         Destroy(gameObject);
     }

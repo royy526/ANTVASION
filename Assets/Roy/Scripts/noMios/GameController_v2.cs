@@ -12,21 +12,13 @@ public class GameController : MonoBehaviour
     GameObject Player;
 
     private static float _health = 6;
-
     private static int _maxHealth = 10;
-
     private static float _moveSpeed = 5f;
-
     private static float _fireRate = 0.5f;
-
     private static float _bulletSize = 0.5f; 
-
     public static float Health { get => _health; set => _health = value; }
-
     public static int MaxHealth { get => _maxHealth; set => _maxHealth = value; }
-
     public static float MoveSpeed { get => _moveSpeed; set => _moveSpeed = value; }
-
     public static float AttackSpeedRate { get => _fireRate; set => _fireRate = value; }
     public static float BulletSize { get => _bulletSize; set => _bulletSize = value; }
 
@@ -84,10 +76,7 @@ public class GameController : MonoBehaviour
 
     public static void OnTriggerEnter2D(Collider2D Collition, GameObject Player)
     {
-        if (Collition.gameObject.CompareTag("Enemy"))
-        {
-            DamagePlayer(1, Player);
-        }
+        if (Collition.gameObject.CompareTag("Enemy")) { DamagePlayer(1, Player); }
     }
 
 }
