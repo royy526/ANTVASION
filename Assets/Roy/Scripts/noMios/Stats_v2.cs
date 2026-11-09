@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 
-public enum ModifierType {Flat, Percent}
+public enum ModifierType {Flat, Percent} // Mover el enum público a su propio archivo
 
 public class StatModifier
 {
@@ -34,7 +34,7 @@ public class Stat
 
             foreach (StatModifier m in _modifiers)
             {
-                if (m.Type == ModifierType.Flat) flat += m.Value;
+                if (m.Type == ModifierType.Flat) flat += m.Value; // Agregar llaves al if
                 else percent += m.Value;
             }
 

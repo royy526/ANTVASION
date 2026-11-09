@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using UnityEngine.Rendering.Universal;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(PlayerStats_v2))]
-public class PlayerControler_v2 : MonoBehaviour
+public class PlayerControler_v2 : MonoBehaviour // Corregir la ortografía de PlayerControler_v2 | Usar PascalCase
 {
     [SerializeField] private Animator _animator;
 
     [Header("Configuración del ataque")]
-    public Transform Aim;
+    public Transform Aim; // Respetar el orden de acceso y static
     public GameObject Bullet;
-    [SerializeField] private Camera _mainCamera;
+    [SerializeField] private Camera _mainCamera; // Separar los grupos de acceso con una línea en blanco
     [SerializeField] private GameObject _melee;
     [SerializeField] private float _attackDuration = 0.4f;
 
-    public List<string> Inventory;
+    public List<string> Inventory; // Respetar el orden de acceso y static
 
     private PlayerStats_v2 _stats;
     private Rigidbody2D _rigidbody;
@@ -69,7 +69,7 @@ public class PlayerControler_v2 : MonoBehaviour
         if (Input.GetMouseButton(1)) { Shoot(); }
     }
 
-    private void Melee()
+    private void Melee() // Usar un verbo en el nombre del método
     {
         if (_isAttacking || _meleeCooldownTimer > 0f) { return; }
 
@@ -98,7 +98,7 @@ public class PlayerControler_v2 : MonoBehaviour
 
     private void Shoot()
     {
-        if (_shootCooldownTimer > 0f) return;
+        if (_shootCooldownTimer > 0f) return; // Agregar llaves al if
 
         _shootCooldownTimer = _stats.ShootCooldown.Value;
 
@@ -111,15 +111,15 @@ public class PlayerControler_v2 : MonoBehaviour
         Destroy(bullet, 2f);
     }
 
-    private void PlayerLook()
+    private void PlayerLook() // Usar un verbo en el nombre del método
     {
         Vector3 mousePosition = Input.mousePosition;
         if (!float.IsFinite(mousePosition.x) || !float.IsFinite(mousePosition.y)) { return; }
 
         Vector3 lookAt = _mainCamera.ScreenToWorldPoint(mousePosition);
 
-        float angleRad = Mathf.Atan2(lookAt.y - transform.position.y, lookAt.x - transform.position.x);
-        float angleDeg = angleRad * Mathf.Rad2Deg - 90f;
+        float angleRad = Mathf.Atan2(lookAt.y - transform.position.y, lookAt.x - transform.position.x); // Sin abreviaciones
+        float angleDeg = angleRad * Mathf.Rad2Deg - 90f; // Sin abreviaciones
         transform.rotation = Quaternion.Euler(0f, 0f, angleDeg);
     }
 }

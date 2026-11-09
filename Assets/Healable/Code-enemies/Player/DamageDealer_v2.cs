@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
-public class DamageDealer_v2 : MonoBehaviour
+public class DamageDealer_v2 : MonoBehaviour // Usar PascalCase | Revisar: otra copia de DamageDealer_v2 declara el mismo tipo
 {
     public float Damage = 3f;
-    [SerializeField] private bool _destroyOnHit;
+    [SerializeField] private bool _destroyOnHit; // Revisar: usar un verbo de estado (is, has o can) | Separar los grupos de acceso con una línea en blanco
 
     private void OnTriggerEnter2D(Collider2D other)
     {

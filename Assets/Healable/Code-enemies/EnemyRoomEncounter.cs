@@ -1,3 +1,5 @@
+// Sugerencia general de Clean Code: usar if de una sola línea con llaves cuando sea legible.
+
 using JetBrains.Annotations;
 using System.Collections.Generic;
 using System.Threading;
@@ -83,14 +85,14 @@ public class EnemyRoomEncounter : MonoBehaviour
     {
 
         
-        if (enemyPrefabs != null && enemyPrefabs.Length > 0)
+        if (enemyPrefabs != null && enemyPrefabs.Length > 0) // Revisar: el campo declarado es _enemyPrefabs
         {
             GameObject selectedPrefab = _enemyPrefabs[Random.Range(0, _enemyPrefabs.Length)];
             if (selectedPrefab == null)
             {
                 return;
         }
-    }
+    } // Revisar la llave de cierre sobrante
 
 
     private void HandleEnemyDied(RoomEnemy enemy)

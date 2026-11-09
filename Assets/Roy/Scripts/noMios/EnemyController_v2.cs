@@ -1,37 +1,39 @@
+// Sugerencia general de Clean Code: usar if de una sola línea con llaves cuando sea legible.
+
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public enum EnemyState
+public enum EnemyState // Mover el enum público a su propio archivo | Revisar: EnemyState y EnemyType ya están declarados en EnemyController.cs
 {
     Wander, Follow, Die, Attack
 };
 
-public enum EnemyType
+public enum EnemyType // Mover el enum público a su propio archivo
 {
     Melee,
     Ranged
 };
 
 
-public class EnemyController_v2 : MonoBehaviour
+public class EnemyController_v2 : MonoBehaviour // Usar PascalCase
 {
-    GameObject Player;
-    public EnemyState CurrentState = EnemyState.Wander;
+    GameObject Player; // Usar _camelCase
+    public EnemyState CurrentState = EnemyState.Wander; // Respetar el orden de acceso y static | Separar los grupos de acceso con una línea en blanco
     public EnemyType EnemyType;
     public float Range;
     public float Speed;
     public float AttackRange;
     public float CoolDown;
 
-    Rigidbody2D RigidBody;
+    Rigidbody2D RigidBody; // Usar _camelCase
 
-    private bool _chosenDirection = false;
+    private bool _chosenDirection = false; // Revisar: usar un verbo de estado (is, has o can)
     private bool _isDead = false;
     private bool _isCoolDownAttack = false;
     private Vector2 _randomDirection;
 
-    public float _health = 2f;
+    public float _health = 2f; // Usar PascalCase | Respetar el orden de acceso y static
 
     void Start()
     {
@@ -46,13 +48,13 @@ public class EnemyController_v2 : MonoBehaviour
             case (EnemyState.Wander):
                 Wander();
             break;
-            case (EnemyState.Follow):
+            case (EnemyState.Follow): // Separar los case con una línea en blanco
                 Follow();
             break;
-            case (EnemyState.Die):
+            case (EnemyState.Die): // Separar los case con una línea en blanco
                 Death();
             break;
-            case (EnemyState.Attack):
+            case (EnemyState.Attack): // Separar los case con una línea en blanco
             Attack();
             break;
         }
@@ -61,13 +63,13 @@ public class EnemyController_v2 : MonoBehaviour
         {
             CurrentState = EnemyState.Follow;
         }
-        else if(IsPlayerInRange(Range) && CurrentState != EnemyState.Die)
+        else if (IsPlayerInRange(Range) && CurrentState != EnemyState.Die)
         {
             CurrentState=EnemyState.Wander;
         }
 
 
-        if(Vector2.Distance(transform.position, Player.transform.position) <= AttackRange)
+        if (Vector2.Distance(transform.position, Player.transform.position) <= AttackRange)
         {
             CurrentState = EnemyState.Attack;
         }
@@ -75,7 +77,7 @@ public class EnemyController_v2 : MonoBehaviour
         
     }
 
-    private bool IsPlayerInRange(float Range)
+    private bool IsPlayerInRange(float Range) // Usar camelCase en el parámetro Range
     {
         return Vector2.Distance(transform.position, Player.transform.position) <= Range;
     }
@@ -120,7 +122,7 @@ public class EnemyController_v2 : MonoBehaviour
                     GameController.DamagePlayer(1, Player);
                     StartCoroutine(Cooldown());
                     break;
-                case (EnemyType.Ranged):
+                case (EnemyType.Ranged): // Separar los case con una línea en blanco
                     //GameObject Bullet = Instantiate(BulletPrefab, transform.position, Quaternion.identity) as GameObject;
                     //Bullet.GetComponent<BulletController>().GetPlayer(Player.transform);
 
@@ -136,12 +138,12 @@ public class EnemyController_v2 : MonoBehaviour
         _isCoolDownAttack = false;
     }
 
-    public void Death()
+    public void Death() // Usar un verbo en el nombre del método | Respetar el orden de acceso y static
     {
         Destroy(gameObject);
     }
 
-    public void ReceivedDamage(Collider2D Collition)
+    public void ReceivedDamage(Collider2D Collition) // Corregir la ortografía de Collition | Usar camelCase en el parámetro Collition
     {
 
 
@@ -155,7 +157,7 @@ public class EnemyController_v2 : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D Collition)
+    private void OnTriggerEnter2D(Collider2D Collition) // Corregir la ortografía de Collition | Usar camelCase en el parámetro Collition | Respetar el orden de los miembros
     {
         ReceivedDamage(Collition);
     }

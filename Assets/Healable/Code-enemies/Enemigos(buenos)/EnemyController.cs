@@ -1,8 +1,10 @@
+// Sugerencia general de Clean Code: usar if de una sola línea con llaves cuando sea legible.
+
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public enum EnemyState
+public enum EnemyState // Mover el enum público a su propio archivo | Revisar: EnemyState y EnemyType también están declarados en EnemyController_v2.cs
 {
     Wander,
     Follow,
@@ -11,7 +13,7 @@ public enum EnemyState
 
 };
 
-public enum EnemyType
+public enum EnemyType // Mover el enum público a su propio archivo
 {
     Melee,
     Ranged
@@ -20,18 +22,18 @@ public enum EnemyType
 public class EnemyController : MonoBehaviour
 {
 
-    GameObject Player;
+    GameObject Player; // Usar _camelCase
 
-    public EnemyState CurrentState = EnemyState.Wander;
+    public EnemyState CurrentState = EnemyState.Wander; // Respetar el orden de acceso y static
     public EnemyType EnemyType;
 
     public float Range;
     public float Speed;
     public float AttackRange;
-    public float coolDown;
+    public float coolDown; // Usar PascalCase
 
 
-    private bool _chosenDirection = false;
+    private bool _chosenDirection = false; // Revisar: usar un verbo de estado (is, has o can)
 
     private bool _isDead = false;
 
@@ -39,7 +41,7 @@ public class EnemyController : MonoBehaviour
 
     private Vector2 _randomDirection;
 
-    public GameObject BulletPrefab;
+    public GameObject BulletPrefab; // Respetar el orden de acceso y static
 
 
     void Start()
@@ -54,13 +56,13 @@ public class EnemyController : MonoBehaviour
             case (EnemyState.Wander):
                 Wander();
                 break;
-                case (EnemyState.Follow):
+                case (EnemyState.Follow): // Separar los case con una línea en blanco
                     Follow();
                 break;
-                case (EnemyState.Die):
+                case (EnemyState.Die): // Separar los case con una línea en blanco
 
                 break;
-                case (EnemyState.Attack):
+                case (EnemyState.Attack): // Separar los case con una línea en blanco
                 Attack();
                 break;
         }
@@ -69,19 +71,19 @@ public class EnemyController : MonoBehaviour
         {
             CurrentState = EnemyState.Follow;
         }
-        else if(IsPlayerInRange(Range) && CurrentState != EnemyState.Die)
+        else if (IsPlayerInRange(Range) && CurrentState != EnemyState.Die)
         {
             CurrentState=EnemyState.Wander;
         }
 
 
-        if(Vector2.Distance(transform.position, Player.transform.position) <= AttackRange)
+        if (Vector2.Distance(transform.position, Player.transform.position) <= AttackRange)
         {
             CurrentState = EnemyState.Attack;
         }
     }
 
-    private bool IsPlayerInRange(float Range)
+    private bool IsPlayerInRange(float Range) // Usar camelCase en el parámetro Range
     {
         return Vector2.Distance(transform.position, Player.transform.position) <= Range;
     }
@@ -125,8 +127,8 @@ public class EnemyController : MonoBehaviour
                     GameController.DamagePlayer(1);
                     StartCoroutine(Cooldown());
                     break;
-                case (EnemyType.Ranged):
-                    GameObject Bullet = Instantiate(BulletPrefab, transform.position, Quaternion.identity) as GameObject;
+                case (EnemyType.Ranged): // Separar los case con una línea en blanco
+                    GameObject Bullet = Instantiate(BulletPrefab, transform.position, Quaternion.identity) as GameObject; // Usar camelCase sin _
                     break;
             }
         }
@@ -139,7 +141,7 @@ public class EnemyController : MonoBehaviour
         _isCoolDownAttack = false;
     }
 
-    public void Death()
+    public void Death() // Usar un verbo en el nombre del método | Respetar el orden de acceso y static
     {
         Destroy(gameObject);
     }

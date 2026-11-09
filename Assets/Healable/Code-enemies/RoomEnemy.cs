@@ -1,3 +1,5 @@
+// Sugerencia general de Clean Code: usar if de una sola línea con llaves cuando sea legible.
+
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,15 +25,15 @@ public class RoomEnemy : MonoBehaviour
 
     public event Action<RoomEnemy> Died;
 
-    private readonly List<Vector2> _path = new();
-    private Rigidbody2D _body;
-    private Transform _player;
-    private EnemySpawnGrid _spawnGrid;
-    private int _pathIndex;
-    private float _nextPathRefresh;
-    private float _nextAttackTime;
-    private Vector2 _movement;
-    private bool _isDead;
+    private readonly List<Vector2> _path = new(); // Respetar el orden de los miembros
+    private Rigidbody2D _body; // Respetar el orden de los miembros
+    private Transform _player; // Respetar el orden de los miembros
+    private EnemySpawnGrid _spawnGrid; // Respetar el orden de los miembros
+    private int _pathIndex; // Respetar el orden de los miembros
+    private float _nextPathRefresh; // Respetar el orden de los miembros
+    private float _nextAttackTime; // Respetar el orden de los miembros
+    private Vector2 _movement; // Respetar el orden de los miembros
+    private bool _isDead; // Respetar el orden de los miembros
 
     private void Awake()
     {
@@ -157,7 +159,7 @@ public class RoomEnemy : MonoBehaviour
         Destroy(gameObject);
     }
 
-    protected void OnDie()
+    protected void OnDie() // Respetar el orden de acceso y static
     {
         Died?.Invoke(this);
     }

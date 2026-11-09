@@ -1,13 +1,15 @@
+// Sugerencia general de Clean Code: usar if de una sola línea con llaves cuando sea legible.
+
 using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-public class EnemySpawner_v2 : MonoBehaviour
+public class EnemySpawner_v2 : MonoBehaviour // Usar PascalCase
 {
     [Header("Enemigos")]
     [SerializeField] private List<Enemy_v2> _enemyPrefabs;
-    [SerializeField] private int _minEnemies = 2;
-    [SerializeField] private int _maxEnemies = 4;
+    [SerializeField] private int _minEnemies = 2; // Sin abreviaciones
+    [SerializeField] private int _maxEnemies = 4; // Sin abreviaciones
 
     [Header("Posiciones de aparicion")]
     [SerializeField] private Transform[] _spawnPoints;
@@ -31,7 +33,7 @@ public class EnemySpawner_v2 : MonoBehaviour
         List<Transform> points = new List<Transform>(_spawnPoints);
         for (int i = points.Count - 1; i > 0; i--)
         {
-            int j = UnityEngine.Random.Range(0, i + 1);
+            int j = UnityEngine.Random.Range(0, i + 1); // Usar un nombre descriptivo para j
             (points[i], points[j]) = (points[j], points[i]);
         }
 

@@ -1,3 +1,5 @@
+// Sugerencia general de Clean Code: usar if de una sola línea con llaves cuando sea legible.
+
 using UnityEngine;
 using UnityEngine.Serialization;
 using System.Collections.Generic;
@@ -6,9 +8,9 @@ public class MapGenerator : MonoBehaviour
 {
     [Header("Generacion")]
     [SerializeField] private int _targetRoomCount = 10;
-    [SerializeField] private int _minAcceptableRooms = 6;
-    [SerializeField] private int _maxAttempts = 300;
-    [SerializeField] private int _maxRegenerations = 20;
+    [SerializeField] private int _minAcceptableRooms = 6; // Sin abreviaciones
+    [SerializeField] private int _maxAttempts = 300; // Sin abreviaciones
+    [SerializeField] private int _maxRegenerations = 20; // Sin abreviaciones
     [SerializeField] private Vector2Int _gridHalfSize = new Vector2Int(4, 4);
     [SerializeField] [Tooltip("Probabilidad de que despues de cada paso el recorrido salte a una sala ya existente al azar para continuar desde ella")] [Range(0f, 1f)] private float _jumpChance = 0.15f;
 
@@ -24,7 +26,7 @@ public class MapGenerator : MonoBehaviour
     public Dictionary<Vector2Int, Room> InstantiatedRooms {get; private set;} = new Dictionary<Vector2Int, Room>();
     public Vector2 RoomWorldSize => _roomWorldSize;
 
-    private static readonly Vector2Int[] _directions = {Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right};
+    private static readonly Vector2Int[] _directions = {Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right}; // Respetar el orden de los miembros | Respetar el orden de acceso y static
 
     void Start()
     {
@@ -104,7 +106,7 @@ public class MapGenerator : MonoBehaviour
         return count;
     }
 
-    private void ConnectRooms(Vector2Int a, Vector2Int b)
+    private void ConnectRooms(Vector2Int a, Vector2Int b) // Usar un nombre descriptivo para a | Usar un nombre descriptivo para b
     {
         _rooms[a].Connections.Add(b - a);
         _rooms[b].Connections.Add(a - b);
@@ -115,7 +117,7 @@ public class MapGenerator : MonoBehaviour
         Dictionary<Vector2Int, int> distances = ComputeDistanceFromStart();
 
         List<Vector2Int> leaves = new List<Vector2Int>();
-        foreach(KeyValuePair<Vector2Int, RoomNode> entry in _rooms)
+        foreach (KeyValuePair<Vector2Int, RoomNode> entry in _rooms)
         {
             if (entry.Value.Type == RoomType.Normal && entry.Value.Connections.Count == 1) { leaves.Add(entry.Key); }
         }
@@ -155,7 +157,7 @@ public class MapGenerator : MonoBehaviour
         {
             Vector2Int current = queue.Dequeue();
 
-            foreach(Vector2Int direction in _rooms[current].Connections)
+            foreach (Vector2Int direction in _rooms[current].Connections)
             {
                 Vector2Int neighbor = current + direction;
 
@@ -234,7 +236,7 @@ public class MapGenerator : MonoBehaviour
     {
         int count = 0;
 
-        foreach(RoomNode node in _rooms.Values)
+        foreach (RoomNode node in _rooms.Values)
         {
             if (node.Type == type)
             {
@@ -251,7 +253,7 @@ public class MapGenerator : MonoBehaviour
 
     private void InstantiateRooms()
     {
-        foreach(RoomNode node in _rooms.Values)
+        foreach (RoomNode node in _rooms.Values)
         {
             Vector3 worldPosition = new Vector3(node.GridPosition.x * _roomWorldSize.x, node.GridPosition.y * _roomWorldSize.y, 0f);
 
@@ -279,13 +281,13 @@ public class MapGenerator : MonoBehaviour
 
     private GameObject GetPrefabForType(RoomType type)
     {
-        switch(type)
+        switch (type)
         {
             case RoomType.Start: return _startRoomPrefab;
-            case RoomType.Boss: return _bossRoomPrefab;
-            case RoomType.Treasure: return _treasureRoomPrefab;
-            case RoomType.Shop: return _shopRoomPrefab;
-            default: return _normalRoomPrefab;
+            case RoomType.Boss: return _bossRoomPrefab; // Separar los case con una línea en blanco
+            case RoomType.Treasure: return _treasureRoomPrefab; // Separar los case con una línea en blanco
+            case RoomType.Shop: return _shopRoomPrefab; // Separar los case con una línea en blanco
+            default: return _normalRoomPrefab; // Separar los case con una línea en blanco
         }
     }
 

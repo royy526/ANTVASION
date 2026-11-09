@@ -9,7 +9,7 @@ public class Item
 
 }
 
-public class CollectionContoller : MonoBehaviour
+public class CollectionContoller : MonoBehaviour // Corregir la ortografía de CollectionContoller
 {
     public Item Item;
 
@@ -34,7 +34,7 @@ public class CollectionContoller : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "Player")
+        if (collision.tag == "Player")
         {
             //PlayerController.collectedAmount++;
             GameController.HealPlayer(HealthChange);

@@ -1,3 +1,5 @@
+// Sugerencia general de Clean Code: usar if de una sola línea con llaves cuando sea legible.
+
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,7 +19,7 @@ public class EnemySpawnGrid : MonoBehaviour
     private float _cellSize;
     private int _width;
     private int _height;
-    [SerializeField] private BoxCollider2D _Bounds;
+    [SerializeField] private BoxCollider2D _Bounds; // Usar _camelCase
     private LayerMask _obstacleMask;
 
     public void Configure(Bounds bounds, float requestedCellSize, LayerMask requestedObstacleMask)
@@ -193,5 +195,5 @@ public class EnemySpawnGrid : MonoBehaviour
         Vector3Int cell = _grid.WorldToCell(worldPosition);
         return new Vector2Int(cell.x, cell.y);
     }
-    private Vector2 CellCenter(Vector2Int cell) => _grid.GetCellCenterWorld(new Vector3Int(cell.x, cell.y, 0));
+    private Vector2 CellCenter(Vector2Int cell) => _grid.GetCellCenterWorld(new Vector3Int(cell.x, cell.y, 0)); // Usar un verbo en el nombre del método
 }
