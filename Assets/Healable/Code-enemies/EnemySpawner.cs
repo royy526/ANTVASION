@@ -53,17 +53,13 @@ public class EnemySpawner : MonoBehaviour
 
         int randomEnemy = Random.Range(0, enemyPrefabs.Length);
 
-        GameObject enemyObject = Instantiate(
-            enemyPrefabs[randomEnemy],
-            spawnPosition,
-            Quaternion.identity
-        );
+        GameObject enemyObject = Instantiate(enemyPrefabs[randomEnemy], spawnPosition, Quaternion.identity);
 
-        Enemy enemy = enemyObject.GetComponent<Enemy>();
+        Enemy_v2 enemy = enemyObject.GetComponent<Enemy_v2>();
 
         if (enemy != null)
         {
-            enemy.SetSpawner(this);
+            //enemy.SetSpawner(this);
         }
 
         enemiesAlive++;
@@ -84,5 +80,4 @@ public class EnemySpawner : MonoBehaviour
         waveCompleted = true;
 
     }
-}
-*/
+}*/

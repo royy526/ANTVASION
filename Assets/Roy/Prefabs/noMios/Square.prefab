@@ -112,9 +112,9 @@ MonoBehaviour:
   EnemyType: 0
   Range: 3
   Speed: 0.2
-  AttackRange: 1
+  AttackRange: 0.2
   CoolDown: 3
-  _health: 8
+  _health: 6
 --- !u!61 &6317084730960578544
 BoxCollider2D:
   m_ObjectHideFlags: 0

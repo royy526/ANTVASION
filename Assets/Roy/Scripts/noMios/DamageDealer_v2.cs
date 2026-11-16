@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DamageDealer_v2 : MonoBehaviour
 {
-    public float Damage = 3f;
+    public float Damage = 1f;
     [SerializeField] private bool _destroyOnHit;
 
     private void OnTriggerEnter2D(Collider2D other)

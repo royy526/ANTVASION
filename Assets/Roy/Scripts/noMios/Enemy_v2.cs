@@ -13,7 +13,6 @@ public class Enemy_v2 : MonoBehaviour
     [SerializeField] private float _activationDelay = 0.75f;
 
     protected Transform _player;
-    protected EnemySpawner_v2 _spawner;
     protected Rigidbody2D _rigidBody;
 
     private float _activeTimer;
@@ -65,15 +64,10 @@ public class Enemy_v2 : MonoBehaviour
         }
     }
 
-    public void SetSpawner(EnemySpawner_v2 enemySpawner)
-    {
-        _spawner = enemySpawner;
-    }
+
 
     protected virtual void Die()
     {
-        if (_spawner != null)  { _spawner.EnemyDied(); }
-
         Destroy(gameObject);
     }
 }

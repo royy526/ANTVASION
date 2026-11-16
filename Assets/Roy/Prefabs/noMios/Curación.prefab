@@ -110,7 +110,7 @@ MonoBehaviour:
     Name: "Curaci\xF3n"
     Description: 'Te cura '
     ItemImage: {fileID: -530127482465205334, guid: d1b3b6d6a6c6c144ebbf3b7bc08549fb, type: 3}
-  HealthChange: 2
+  HealthChange: 4
   MoveSpeedChange: 0
   AttackSpeedChange: 0
   BulletSizeChange: 0

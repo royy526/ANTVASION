@@ -110,6 +110,6 @@ MonoBehaviour:
     Description: "Eres m\xE1s rapido"
     ItemImage: {fileID: 372740928218721709, guid: d1b3b6d6a6c6c144ebbf3b7bc08549fb, type: 3}
   HealthChange: 0
-  MoveSpeedChange: 3
+  MoveSpeedChange: 5
   AttackSpeedChange: 0
   BulletSizeChange: 0

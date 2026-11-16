@@ -23,6 +23,7 @@ public class EnemyController_v2 : MonoBehaviour
     private bool _isDead = false;
     private bool _isCoolDownAttack = false;
     private Vector2 _randomDirection;
+    protected EnemySpawner_v2 _spawner;
 
     public float _health = 2f;
 
@@ -124,6 +125,11 @@ public class EnemyController_v2 : MonoBehaviour
             _health -= 1;
             if (_health == 0) { Death(); }
         }
+    }
+
+    public void SetSpawner(EnemySpawner_v2 enemySpawner)
+    {
+        _spawner = enemySpawner;
     }
 
     private void OnTriggerEnter2D(Collider2D Collition)
