@@ -59,6 +59,7 @@ public class PlayerControler_v2 : MonoBehaviour
     {
         _meleeCooldownTimer -= Time.deltaTime;
         _shootCooldownTimer -= Time.deltaTime;
+        Debug.Log($"Cooldown de disparo = {GameController.AttackSpeedRate}");
 
         UpdateMeleeDuration();
 

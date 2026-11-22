@@ -21,13 +21,13 @@ public class CollectionController_v2 : MonoBehaviour
     public float DamageChange;
     public float MeleeCooldownChange;
     public float BulletSpeedChange;
+    protected ItemSpawner_v2 _spawner;
 
 
     private void Start()
     {
         GetComponent<SpriteRenderer>().sprite = Item.ItemImage;
         Destroy(GetComponent<PolygonCollider2D>());
-        gameObject.AddComponent<PolygonCollider2D>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -43,5 +43,10 @@ public class CollectionController_v2 : MonoBehaviour
             GameController.BulletSpeedChange(BulletSpeedChange);
             Destroy(gameObject);
         }
+    }
+
+    public void SetSpawner(ItemSpawner_v2 itemSpawner)
+    {
+        _spawner = itemSpawner;
     }
 }

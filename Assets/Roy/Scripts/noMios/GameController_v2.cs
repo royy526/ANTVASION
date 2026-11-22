@@ -13,12 +13,21 @@ public class GameController : MonoBehaviour
 
     private static float _health = 6;
     private static int _maxHealth = 10;
-    private static float _moveSpeed = 5f;
-    private static float _fireRate = 0.5f;
-    private static float _bulletSize = 0.5f;
+    private static float _moveSpeed = 0f;
+    private static float _fireRate = .5f;
+    private static float _bulletSize = 1f;
     private static float _damage = 1f;
-    private static float _meleeColdoown = 0.5f;
+    private static float _meleeColdoown = 1f;
     private static float _bulletSpeed = 10f;
+
+    [Header("Valores base")]
+    [SerializeField] private float _baseHealth = 6f;
+    [SerializeField] private float _baseMoveSpeed = .1f;
+    [SerializeField] private float _baseShootCooldown = 2;
+    [SerializeField] private float _baseMeleeCooldown = 1;
+    [SerializeField] private float _baseBulletSize = 1;
+    [SerializeField] private float _baseDamage = 1f;
+    [SerializeField] private float _baseBulletSpeed = 10f;
 
     public static float Health { get => _health; set => _health = value; }
     public static int MaxHealth { get => _maxHealth; set => _maxHealth = value; }
@@ -35,12 +44,12 @@ public class GameController : MonoBehaviour
     {
         if (instance == null) { instance = this; }
         Player = GameObject.FindGameObjectWithTag("Player");
+        ResetStats();
     }
 
     private void Start()
     {
         HealthText.text = "Vida: " + _health;
-        _health = 6;
     }
 
     private void Update()
@@ -62,7 +71,8 @@ public class GameController : MonoBehaviour
     }
     public static void FireRateChange(float Rate)
     {
-        _fireRate -= Mathf.Max(0.05f, _fireRate - Rate);
+        _fireRate -= Mathf.Max(0.1f, _fireRate - Rate);
+
     }
 
     public static void BulletSizeChange(float Size)
@@ -95,9 +105,25 @@ public class GameController : MonoBehaviour
     {
         _bulletSpeed += Speed;
     }
+
+    private bool _collected;
     public static void OnTriggerEnter2D(Collider2D Collition, GameObject Player)
     {
         if (Collition.gameObject.CompareTag("Enemy")) { DamagePlayer(1, Player); }
+
+        
+
     }
 
+
+    private void ResetStats()
+    {
+        _health = _baseHealth;
+        _moveSpeed = _baseMoveSpeed;
+        _fireRate = _baseShootCooldown;
+        _meleeColdoown = _baseMeleeCooldown;
+        _bulletSize = _baseBulletSize;
+        _damage = _baseDamage;
+        _bulletSpeed = _baseBulletSpeed;
+    }
 }
