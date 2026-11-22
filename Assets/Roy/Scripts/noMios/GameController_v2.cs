@@ -15,12 +15,19 @@ public class GameController : MonoBehaviour
     private static int _maxHealth = 10;
     private static float _moveSpeed = 5f;
     private static float _fireRate = 0.5f;
-    private static float _bulletSize = 0.5f; 
+    private static float _bulletSize = 0.5f;
+    private static float _damage = 1f;
+    private static float _meleeColdoown = 0.5f;
+    private static float _bulletSpeed = 10f;
+
     public static float Health { get => _health; set => _health = value; }
     public static int MaxHealth { get => _maxHealth; set => _maxHealth = value; }
     public static float MoveSpeed { get => _moveSpeed; set => _moveSpeed = value; }
     public static float AttackSpeedRate { get => _fireRate; set => _fireRate = value; }
     public static float BulletSize { get => _bulletSize; set => _bulletSize = value; }
+    public static float Damage { get => _damage; set => _damage = value; }
+    public static float MeleeCooldown { get => _meleeColdoown; set => _meleeColdoown = value; }
+    public static float BulletSpeed { get => _bulletSpeed; set => _bulletSpeed = value; }
 
 
     [SerializeField] private TextMeshProUGUI HealthText;
@@ -55,7 +62,7 @@ public class GameController : MonoBehaviour
     }
     public static void FireRateChange(float Rate)
     {
-        _fireRate -= Rate;
+        _fireRate -= Mathf.Max(0.05f, _fireRate - Rate);
     }
 
     public static void BulletSizeChange(float Size)
@@ -74,6 +81,20 @@ public class GameController : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    public static void DamageChange(float Damage)
+    {
+        _damage += Damage;
+    }
+
+    public static void MeleeCooldownChange(float Cooldown)
+    {
+        _meleeColdoown = Mathf.Max(0.05f, _meleeColdoown - Cooldown);
+    }
+
+    public static void BulletSpeedChange(float Speed)
+    {
+        _bulletSpeed += Speed;
+    }
     public static void OnTriggerEnter2D(Collider2D Collition, GameObject Player)
     {
         if (Collition.gameObject.CompareTag("Enemy")) { DamagePlayer(1, Player); }

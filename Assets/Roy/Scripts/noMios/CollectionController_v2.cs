@@ -18,6 +18,10 @@ public class CollectionController_v2 : MonoBehaviour
     public float MoveSpeedChange;
     public float AttackSpeedChange;
     public float BulletSizeChange;
+    public float DamageChange;
+    public float MeleeCooldownChange;
+    public float BulletSpeedChange;
+
 
     private void Start()
     {
@@ -34,6 +38,9 @@ public class CollectionController_v2 : MonoBehaviour
             GameController.MoveSpeedChange(MoveSpeedChange);
             GameController.FireRateChange(AttackSpeedChange);
             GameController.BulletSizeChange(BulletSizeChange);
+            GameController.DamageChange(DamageChange);
+            GameController.MeleeCooldownChange(MeleeCooldownChange);
+            GameController.BulletSpeedChange(BulletSpeedChange);
             Destroy(gameObject);
         }
     }

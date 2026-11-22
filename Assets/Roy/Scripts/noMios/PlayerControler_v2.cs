@@ -16,7 +16,6 @@ public class PlayerControler_v2 : MonoBehaviour
 
     public List<string> Inventory;
 
-    private PlayerStats_v2 _stats;
     private Rigidbody2D _rigidbody;
     private DamageDealer_v2 _meleeDamage;
 
@@ -29,7 +28,6 @@ public class PlayerControler_v2 : MonoBehaviour
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
-        _stats = GetComponent<PlayerStats_v2>();
         _animator.SetBool("IsWalking", false);
 
         if (_melee != null) { _meleeDamage = _melee.GetComponent<DamageDealer_v2>(); }
@@ -44,7 +42,7 @@ public class PlayerControler_v2 : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _rigidbody.linearVelocity = _moveInput * _stats.MoveSpeed.Value;
+        _rigidbody.linearVelocity = _moveInput * GameController.MoveSpeed;
     }
 
     private void ReadMovementInput()
@@ -73,12 +71,12 @@ public class PlayerControler_v2 : MonoBehaviour
     {
         if (_isAttacking || _meleeCooldownTimer > 0f) { return; }
 
-        if (_meleeDamage != null) { _meleeDamage.Damage = _stats.Damage.Value; }
+        if (_meleeDamage != null) { _meleeDamage.Damage = GameController.Damage; }
 
         _melee.SetActive(true);
         _isAttacking = true;
         _attackTimer = 0f;
-        _meleeCooldownTimer = _stats.MeleeCooldown.Value;
+        _meleeCooldownTimer = GameController.MeleeCooldown;
         _animator.SetBool("IsAttacking", true);
     }
 
@@ -100,14 +98,14 @@ public class PlayerControler_v2 : MonoBehaviour
     {
         if (_shootCooldownTimer > 0f) { return; }
 
-        _shootCooldownTimer = _stats.ShootCooldown.Value;
+        _shootCooldownTimer = GameController.AttackSpeedRate;
 
         GameObject bullet = Instantiate(Bullet, Aim.position, Aim.rotation);
 
         DamageDealer_v2 bulletDamage = bullet.GetComponent<DamageDealer_v2>();
-        if (bulletDamage != null) { bulletDamage.Damage = _stats.Damage.Value; }
+        if (bulletDamage != null) { bulletDamage.Damage = GameController.Damage; }
 
-        bullet.GetComponent<Rigidbody2D>().AddForce(Aim.up * _stats.BulletSpeed.Value, ForceMode2D.Impulse);
+        bullet.GetComponent<Rigidbody2D>().AddForce(Aim.up * GameController.BulletSpeed, ForceMode2D.Impulse);
         Destroy(bullet, 2f);
     }
 
