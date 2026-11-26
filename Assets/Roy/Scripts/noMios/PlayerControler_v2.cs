@@ -102,6 +102,7 @@ public class PlayerControler_v2 : MonoBehaviour
         _shootCooldownTimer = GameController.AttackSpeedRate;
 
         GameObject bullet = Instantiate(Bullet, Aim.position, Aim.rotation);
+        bullet.transform.localScale = Vector3.one * GameController.BulletSize;
 
         DamageDealer_v2 bulletDamage = bullet.GetComponent<DamageDealer_v2>();
         if (bulletDamage != null) { bulletDamage.Damage = GameController.Damage; }

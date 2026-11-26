@@ -71,7 +71,7 @@ public class GameController : MonoBehaviour
     }
     public static void FireRateChange(float Rate)
     {
-        _fireRate -= Mathf.Max(0.1f, _fireRate - Rate);
+        _fireRate *= (1f - Rate);
 
     }
 

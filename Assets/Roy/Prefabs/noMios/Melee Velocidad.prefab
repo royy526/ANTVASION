@@ -109,7 +109,7 @@ MonoBehaviour:
   Item:
     Name: Melee Velocidad
     Description: 
-    ItemImage: {fileID: 0}
+    ItemImage: {fileID: 5402143994116500116, guid: d1b3b6d6a6c6c144ebbf3b7bc08549fb, type: 3}
   HealthChange: 0
   MoveSpeedChange: 0
   AttackSpeedChange: 0
