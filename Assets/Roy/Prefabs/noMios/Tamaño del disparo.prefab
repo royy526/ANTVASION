@@ -109,7 +109,7 @@ MonoBehaviour:
   Item:
     Name: "Tama\xF1o del disparo"
     Description: 
-    ItemImage: {fileID: 0}
+    ItemImage: {fileID: -2513750971434267929, guid: d1b3b6d6a6c6c144ebbf3b7bc08549fb, type: 3}
   HealthChange: 0
   MoveSpeedChange: 0
   AttackSpeedChange: 0
