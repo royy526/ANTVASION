@@ -1,0 +1,819 @@
+fileFormatVersion: 2
+guid: a4e0c29a1732d714ca9c2befc63fa526
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6594614181458950660
+    second: postalCard_0
+  - first:
+      213: -5138511128012457024
+    second: postalCard_1
+  - first:
+      213: 5791850938704841286
+    second: postalCard_2
+  - first:
+      213: -4279643626556544852
+    second: postalCard_3
+  - first:
+      213: 8680688345154884710
+    second: postalCard_4
+  - first:
+      213: 2759628055749174746
+    second: postalCard_5
+  - first:
+      213: 6482470568307327172
+    second: postalCard_6
+  - first:
+      213: -2162319517946987849
+    second: postalCard_7
+  - first:
+      213: -2778872587845798452
+    second: postalCard_8
+  - first:
+      213: 2937222593130827562
+    second: postalCard_9
+  - first:
+      213: -9094923016799502650
+    second: postalCard_10
+  - first:
+      213: 2246450356883829757
+    second: postalCard_11
+  - first:
+      213: -2469757213246671899
+    second: postalCard_12
+  - first:
+      213: 6102576763606518138
+    second: postalCard_13
+  - first:
+      213: 4388415050702394906
+    second: postalCard_14
+  - first:
+      213: 4648721261017980656
+    second: postalCard_15
+  - first:
+      213: 8939997473002735840
+    second: postalCard_16
+  - first:
+      213: -1094921765091041613
+    second: postalCard_17
+  - first:
+      213: 5621943549304731517
+    second: postalCard_18
+  - first:
+      213: -781008383578840632
+    second: postalCard_19
+  - first:
+      213: -4303477727430255133
+    second: postalCard_20
+  - first:
+      213: -3874073618610675158
+    second: postalCard_21
+  - first:
+      213: -1452519401806957327
+    second: postalCard_22
+  - first:
+      213: 6697396079885715544
+    second: postalCard_23
+  - first:
+      213: -2192287756124997749
+    second: postalCard_24
+  - first:
+      213: 4376974732563014650
+    second: postalCard_25
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: postalCard_0
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 254
+        width: 17
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40a3d9488a6c48b50800000000000000
+      internalID: 6594614181458950660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: postalCard_1
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 254
+        width: 12
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0cbfc64aa5750b8b0800000000000000
+      internalID: -5138511128012457024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: postalCard_2
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 254
+        width: 14
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64ac3810eb9c06050800000000000000
+      internalID: 5791850938704841286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: postalCard_3
+      rect:
+        serializedVersion: 2
+        x: 238
+        y: 254
+        width: 14
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca825d1dbc6ab94c0800000000000000
+      internalID: -4279643626556544852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: postalCard_4
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 254
+        width: 15
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66494d2ce00087870800000000000000
+      internalID: 8680688345154884710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: postalCard_5
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 240
+        width: 42
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad5a127781b2c4620800000000000000
+      internalID: 2759628055749174746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: postalCard_6
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 240
+        width: 42
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c002e2e2ac56f950800000000000000
+      internalID: 6482470568307327172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: postalCard_7
+      rect:
+        serializedVersion: 2
+        x: 357
+        y: 254
+        width: 16
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ba30e9dad5edf1e0800000000000000
+      internalID: -2162319517946987849
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: postalCard_8
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 254
+        width: 14
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc5716dba167f69d0800000000000000
+      internalID: -2778872587845798452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: postalCard_9
+      rect:
+        serializedVersion: 2
+        x: 391
+        y: 254
+        width: 17
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2f80d9e26c13c820800000000000000
+      internalID: 2937222593130827562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: postalCard_10
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 254
+        width: 20
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ce342404b758c180800000000000000
+      internalID: -9094923016799502650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: postalCard_11
+      rect:
+        serializedVersion: 2
+        x: 430
+        y: 254
+        width: 12
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df33c9782befc2f10800000000000000
+      internalID: 2246450356883829757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: postalCard_12
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 254
+        width: 14
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e339fe56e8a9bdd0800000000000000
+      internalID: -2469757213246671899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: postalCard_13
+      rect:
+        serializedVersion: 2
+        x: 459
+        y: 254
+        width: 14
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a79c151db35b0b450800000000000000
+      internalID: 6102576763606518138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: postalCard_14
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 222
+        width: 15
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a161810ec38c6ec30800000000000000
+      internalID: 4388415050702394906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: postalCard_15
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 222
+        width: 14
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0fe58ce5b53938040800000000000000
+      internalID: 4648721261017980656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: postalCard_16
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 222
+        width: 16
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e8c737e550411c70800000000000000
+      internalID: 8939997473002735840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: postalCard_17
+      rect:
+        serializedVersion: 2
+        x: 247
+        y: 222
+        width: 16
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3be97eea47e0ec0f0800000000000000
+      internalID: -1094921765091041613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: postalCard_18
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 209
+        width: 23
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d777b9b2fd7250e40800000000000000
+      internalID: 5621943549304731517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: postalCard_19
+      rect:
+        serializedVersion: 2
+        x: 302
+        y: 232
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c16e2a530d4925f0800000000000000
+      internalID: -781008383578840632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: postalCard_20
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 232
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3edd6b5cec9f644c0800000000000000
+      internalID: -4303477727430255133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: postalCard_21
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 209
+        width: 23
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a22aff0d1968c3ac0800000000000000
+      internalID: -3874073618610675158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: postalCard_22
+      rect:
+        serializedVersion: 2
+        x: 366
+        y: 222
+        width: 14
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f4fee1cc4d97dbe0800000000000000
+      internalID: -1452519401806957327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: postalCard_23
+      rect:
+        serializedVersion: 2
+        x: 381
+        y: 222
+        width: 20
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8588ea5104ee1fc50800000000000000
+      internalID: 6697396079885715544
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: postalCard_24
+      rect:
+        serializedVersion: 2
+        x: 402
+        y: 222
+        width: 17
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b873bbaa6ed6391e0800000000000000
+      internalID: -2192287756124997749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: postalCard_25
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 222
+        width: 15
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af3674d34532ebc30800000000000000
+      internalID: 4376974732563014650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      postalCard_0: 6594614181458950660
+      postalCard_1: -5138511128012457024
+      postalCard_10: -9094923016799502650
+      postalCard_11: 2246450356883829757
+      postalCard_12: -2469757213246671899
+      postalCard_13: 6102576763606518138
+      postalCard_14: 4388415050702394906
+      postalCard_15: 4648721261017980656
+      postalCard_16: 8939997473002735840
+      postalCard_17: -1094921765091041613
+      postalCard_18: 5621943549304731517
+      postalCard_19: -781008383578840632
+      postalCard_2: 5791850938704841286
+      postalCard_20: -4303477727430255133
+      postalCard_21: -3874073618610675158
+      postalCard_22: -1452519401806957327
+      postalCard_23: 6697396079885715544
+      postalCard_24: -2192287756124997749
+      postalCard_25: 4376974732563014650
+      postalCard_3: -4279643626556544852
+      postalCard_4: 8680688345154884710
+      postalCard_5: 2759628055749174746
+      postalCard_6: 6482470568307327172
+      postalCard_7: -2162319517946987849
+      postalCard_8: -2778872587845798452
+      postalCard_9: 2937222593130827562
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

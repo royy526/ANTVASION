@@ -15,6 +15,7 @@ public class SceneFade : MonoBehaviour
 
     IEnumerator FadeIn()
     {
+        fadeImage.raycastTarget = true;
         float time = 0;
 
         while (time < duration)
@@ -28,6 +29,7 @@ public class SceneFade : MonoBehaviour
         }
 
         fadeImage.color = new Color(0, 0, 0, 0);
+        fadeImage.raycastTarget = false;
     }
 
     public void FadeToScene(string sceneName)

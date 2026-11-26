@@ -6,7 +6,13 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Roy/Scenes/SplashScene.unity
+    guid: 3d3d8c3c79dff2f4188fce29d1918514
+  - enabled: 1
     path: Assets/Roy/Scenes/Pruebas_r.unity
     guid: 86ea5c4c51344b74fab87814bc331ef7
+  - enabled: 1
+    path: Assets/Roy/Scenes/MainMenu.unity
+    guid: 99414759ca60a13498a4f27401481968
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
